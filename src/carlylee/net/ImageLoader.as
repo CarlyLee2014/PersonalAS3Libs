@@ -13,7 +13,27 @@
 	import flash.utils.setTimeout;
 	
 	import carlylee.events.ImageLoaderEvent;
-
+	/**
+	 * ImageLoader
+	 * 
+	 * How to use :
+	 * var imgLoader:ImageLoader = new ImageLoader();
+	 * 
+	 * imgLoader.init( "img.jpg" );
+	 * imgLoader.addEventListener( ImageLoaderEvent.LOAD_COMPLETE, onImageLoadComplete );
+	 * imgLoader.addEventListener( IOErrorEvent.IO_ERROR, onImageLoadError );
+	 * or
+	 * imgLoader.init( "img.jpg", completeFunc, errorFunc );
+	 * 
+	 * onImageLoadComplete( $e:ImageLoaderEvent );
+	 * onImageLoadError( $error:String );
+	 * 
+	 * completeFunc( $loader:ImageLoader );
+	 * errorFunc( $error:String );
+	 * 
+	 * @author Eunjeong, Lee(carly.l86@gmail.com).
+	 * modified: Mar 28, 2014
+	 */
 	public class ImageLoader extends EventDispatcher
 	{
 		public static const RETRY_DELAY:int = 1000;
@@ -37,14 +57,13 @@
 		public function ImageLoader(){}
 		
 		/**
-		 * 
-		 * @param $url(String)
-		 * @param $completeFunc(Function this)
-		 * @param $errorFunc(Function)
-		 * @param $progressFunc(Function)
-		 * @param $maxTryNumber(int 3)
-		 * @param $smoothing(Boolean false)
-		 * @param $initFunc(Function)
+		 * @param $url:String
+		 * @param $completeFunc:Function
+		 * @param $errorFunc:Function
+		 * @param $progressFunc:Function=null
+		 * @param $maxTryNumber:int=3
+		 * @param $smoothing:Boolean=false
+		 * @param $initFunc:Function=null
 		 * 
 		 */		
 		public function init( $url:String,
@@ -71,7 +90,7 @@
 		}
 		
 		/**
-		 * @param $random(Boolean) if it's true 'url?545465', it's not true 'url'.
+		 * @param $random:Boolean=false	 if it's true 'url?545465', it's not true 'url'.
 		 */		
 		public function load( $random:Boolean=false ):void{
 			_startTime = getTimer();

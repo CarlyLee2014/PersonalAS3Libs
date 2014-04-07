@@ -12,9 +12,9 @@
 		
 		/**
 		 * 
-		 * @param $n	Number.
-		 * @param $digit 남길 소수 자리 
-		 * @return 
+		 * @param $n:Number
+		 * @param $digit:int 남길 소수 자리 
+		 * @return:String 
 		 * 
 		 */		
 		public static function formatNumberWithDot( $n:Number, $digit:int=2 ):String{
@@ -30,11 +30,11 @@
 			return str;
 		}
 		/**
-		 * Number형태를 16진수로 변환 
-		 * @param value
-		 * @param length
-		 * @param header
-		 * @return 
+		 * Number -> Hexadecmial
+		 * @param value:int
+		 * @param length:int
+		 * @param header:String
+		 * @return:String 
 		 * 
 		 */		
 		
@@ -53,9 +53,9 @@
 		 * value값에 원하는 만큼의 0을 추가한다.
 		 * num은 value값과 추가될 0의 길이를 합한 문자열 길이 
 		 *  
-		 * @param value
-		 * @param num(int=2) value.length+(value.length-num);
-		 * @return String;
+		 * @param value:int
+		 * @param num:int=2 value.length+(value.length-num);
+		 * @return:String
 		 * 
 		 */		
 		
@@ -71,8 +71,8 @@
 		
 		/**
 		 * Get rid of space frome $string and returns.
-		 * @param $string
-		 * @return String 
+		 * @param $string:String
+		 * @return String:String 
 		 * 
 		 */		
 		public static function trimString( $string:String ):String{
@@ -88,10 +88,9 @@
 		
 		/**
 		 * Check texts spelling without space. 
-		 * @param $string1
-		 * @param $string2
-		 * @return Boolean
-		 * 
+		 * @param $string1:String
+		 * @param $string2:String
+		 * @return:Boolean
 		 */		
 		public static function compareStringTrimSpace( $string1:String, $string2:String ):Boolean{
 			var i:int = 0;
@@ -111,10 +110,11 @@
 		}
 		
 		/**
+		 * compare two Strings, return number of same chracters.
 		 * 두개의 문자열을 비교하여 같은 문자열의 갯수를 반환합니다. 
-		 * @param string1
-		 * @param string2
-		 * @return 
+		 * @param string1:String
+		 * @param string2:String
+		 * @return:int 
 		 * 
 		 */		
 		public static function strcmp( $string1:String, $string2:String ):int{
@@ -127,9 +127,9 @@
 		}
 		/**
 		 * 두개의 문자열을 비교하여 같은 정도를 1을 기준으로 반환합니다. 
-		 * @param string1
-		 * @param string2
-		 * @return 
+		 * @param string1:String
+		 * @param string2:String
+		 * @return:String 
 		 * 
 		 */		
 		public static function strcmpPercent( $string1:String, $string2:String ):Number{
@@ -153,10 +153,11 @@
 		}
 		
 		/**
+		 * return String's byte size.
 		 * 문자열의 바이트 크기를 반환 
-		 * @param str
-		 * @param encode
-		 * @return 
+		 * @param str:String
+		 * @param encode:String
+		 * @return:String 
 		 * 
 		 */		
 		public static function getByteSize( $str:String, $encode:String="UTF-8" ):int{
@@ -168,8 +169,8 @@
 		
 		/**
 		 * 
-		 * @param $num 1000000 -> 1,000,000
-		 * @return 
+		 * @param $num 		1000000 -> 1,000,000
+		 * @return:String 
 		 * 
 		 */		
 		public static function formatNumberWithCommas( $num:String ):String{
@@ -187,8 +188,8 @@
 		
 		/**
 		 * 
-		 * @param $seconds 3600
-		 * @return 1 only returns Hour.
+		 * @param $seconds:int 	3600
+		 * @return:String 		1. only returns Hour.
 		 * 
 		 */		
 		public static function timeFormatHour( $seconds:int ):String{
@@ -197,8 +198,8 @@
 		
 		/**
 		 * 
-		 * @param $ms millisecond 3600000
-		 * @return 1 only returns Hour.
+		 * @param $ms:int 	millisecond 3600000
+		 * @return:String 	1. only returns Hour.
 		 * 
 		 */		
 		public static function timeFormatHourUsingMS( $ms:int ):String{
@@ -207,8 +208,8 @@
 		
 		/**
 		 * 
-		 * @param $seconds 9925
-		 * @return 02:45:25
+		 * @param $seconds:int 	9925
+		 * @return:String 		02:45:25
 		 * 
 		 */		
 		public static function timeFormatColonHourMinSec( $seconds:int ):String {
@@ -220,8 +221,8 @@
 		
 		/**
 		 * 
-		 * @param $ms 9925000
-		 * @return 02:45:25
+		 * @param $ms:int 	9925000
+		 * @return:String 	02:45:25
 		 * 
 		 */		
 		public static function timeFormatColonHourMinSecUsingMS( $ms:int ):String {
@@ -232,10 +233,8 @@
 		}
 		
 		/**
-		 * 
-		 * @param $seconds 9900
-		 * @return 45:00 not 02:45:00
-		 * 
+		 * @param $seconds:int 		9900
+		 * @return:String			45:00 not 02:45:00
 		 */		
 		public static function timeFormatColonMinSec( $seconds:int ):String{
 			var min:int = ($seconds/60)%60;
@@ -244,10 +243,8 @@
 		}
 		
 		/**
-		 * 
-		 * @param $ms 9900000
-		 * @return 45:00 not 02:45:00
-		 * 
+		 * @param $ms:int 	9900000
+		 * @return:String 	45:00 not 02:45:00
 		 */		
 		public static function timeFormatColonMinSecUsingMS( $ms:int ):String{
 			var min:int = ($ms/60000)%60;
@@ -256,11 +253,9 @@
 		}
 		
 		/**
-		 * 
-		 * @param $seconds(int) 9900
-		 * @param $isMillisecond(Boolean) Is '$seconds' millisecond? 
-		 * @return 165 only returns minutes.
-		 * 
+		 * @param $seconds:int 				9900
+		 * @param $isMillisecond:Boolean 	Is '$seconds' millisecond? 
+		 * @return:String					165 only returns minutes.
 		 */		
 		public static function timeFormatMin( $seconds:int, $isMillisecond:Boolean=false ):String{
 			if( $isMillisecond ){
@@ -272,10 +267,10 @@
 		
 		public static function timeFormatPast( $seconds:int ):String {
 			$seconds = -$seconds;
-			if( $seconds<60 ) return $seconds+"second";
-			if( $seconds<3600 ) return int( $seconds/60 )+"minutes";
-			if( $seconds<86400 ) return int( $seconds/3600 )+"hours";
-			if( $seconds<604800 ) return int( $seconds/86400 )+"day";
+			if( $seconds<60 ) 		return $seconds+"second";
+			if( $seconds<3600 ) 	return int( $seconds/60 )+"minutes";
+			if( $seconds<86400 ) 	return int( $seconds/3600 )+"hours";
+			if( $seconds<604800 ) 	return int( $seconds/86400 )+"day";
 			if( $seconds<18144000 ) return int( $seconds/604800 )+"weeks";
 			if( $seconds<31536000 ) return int( $seconds/18144000 )+"month";
 			return int($seconds/31536000)+"years";

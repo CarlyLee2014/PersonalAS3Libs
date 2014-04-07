@@ -11,9 +11,12 @@ package carlylee.net
 	
 	/**
 	 * XMLConnector
+	 * 
 	 * Using 'XMLConnector', you can call the XML with only one sentence.
+	 * 
 	 * How to use :
 	 * XMLConnector.getInstance().requestXML( "test.xml", connecterComplete, urlVar ... );
+	 * connecterComplete( $xml:XML );
 	 * 
 	 * author: Eunjeong, Lee(carly.l86@gmail.com).
 	 * created: Dec 12, 2013
@@ -27,23 +30,23 @@ package carlylee.net
 		public function XMLConnector(target:IEventDispatcher=null){}
 		
 		public static function getInstance():XMLConnector{
-			if( !_instance ) _instance = new XMLConnector;
+			if( _instance != null ) _instance = new XMLConnector;
 			return _instance;
 		}
 		
 		/**
 		 * 
-		 * @param $url
-		 * @param $completeFunc
-		 * @param $urlVariables
-		 * @param $urlMethod
-		 * @param $isZipped
-		 * @param $maxTryNumber
-		 * @param $progressFunc
-		 * @param $errorFunc
-		 * @param $obj
-		 * @param $charSet
-		 * @param $random
+		 * @param $url:String
+		 * @param $completeFunc:Function
+		 * @param $urlVariables:URLVariables=null
+		 * @param $urlMethod:String=URLRequestMethod.GET
+		 * @param $isZipped:Boolean=false
+		 * @param $maxTryNumber:int=3
+		 * @param $progressFunc:Function=null
+		 * @param $errorFunc:Function=null
+		 * @param $obj:Object=null
+		 * @param $charSet:String="UTF-8"
+		 * @param $random:Boolean=false
 		 * 
 		 */		
 		public function requestXML( $url:String,
@@ -51,7 +54,7 @@ package carlylee.net
 									$urlVariables:URLVariables=null,
 									$urlMethod:String=URLRequestMethod.GET,
 									$isZipped:Boolean=false, 
-									$maxTryNumber:int = 3, 
+									$maxTryNumber:int=3, 
 									$progressFunc:Function=null,
 									$errorFunc:Function=null, 
 									$obj:Object=null,
@@ -69,15 +72,15 @@ package carlylee.net
 				loader.addEventListener( ProgressEvent.PROGRESS, $progressFunc, false, 0, true );
 			}
 			
-			loader.addEventListener( XMLLoaderEvent.DATA_COMPLETE, onComplete, false, 0, true );
-			loader.addEventListener( XMLLoaderEvent.COMPLETE_ERROR, onError, false, 0, true );
+			loader.addEventListener( XMLLoaderEvent.LOAD_COMPLETE, onComplete, false, 0, true );
+			loader.addEventListener( XMLLoaderEvent.LOAD_ERROR, onError, false, 0, true );
 			loader.load( $charSet, $random );
 		}
 		
 		private function onComplete( $e:XMLLoaderEvent ):void{
 			var loader:XMLLoader = $e.currentTarget as XMLLoader;
-			loader.removeEventListener( XMLLoaderEvent.DATA_COMPLETE, onComplete );
-			loader.removeEventListener( XMLLoaderEvent.COMPLETE_ERROR, onError );
+			loader.removeEventListener( XMLLoaderEvent.LOAD_COMPLETE, onComplete );
+			loader.removeEventListener( XMLLoaderEvent.LOAD_ERROR, onError );
 			
 			if( loader.progressFunc != null ){
 				loader.removeEventListener( ProgressEvent.PROGRESS, loader.progressFunc );
@@ -89,8 +92,8 @@ package carlylee.net
 		
 		private function onError( $e:XMLLoaderEvent ):void{
 			var loader:XMLLoader = $e.currentTarget as XMLLoader;
-			loader.removeEventListener( XMLLoaderEvent.DATA_COMPLETE, onComplete );
-			loader.removeEventListener( XMLLoaderEvent.COMPLETE_ERROR, onError );
+			loader.removeEventListener( XMLLoaderEvent.LOAD_COMPLETE, onComplete );
+			loader.removeEventListener( XMLLoaderEvent.LOAD_ERROR, onError );
 			
 			if( loader.progressFunc != null ){
 				loader.removeEventListener( ProgressEvent.PROGRESS, loader.progressFunc );

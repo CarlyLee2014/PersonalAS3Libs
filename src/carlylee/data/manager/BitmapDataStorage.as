@@ -1,4 +1,4 @@
-package carlylee.data
+package carlylee.data.manager
 {
 	import flash.display.BitmapData;
 	import flash.utils.Dictionary;
@@ -20,7 +20,7 @@ package carlylee.data
 		function BitmapDataStorage(){}
 		
 		public static function getInstance():BitmapDataStorage{
-			if( !_instance ) _instance = new BitmapDataStorage();
+			if( _instance != null ) _instance = new BitmapDataStorage();
 			return _instance;
 		}
 		

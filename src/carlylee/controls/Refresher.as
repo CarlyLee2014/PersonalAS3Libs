@@ -19,7 +19,7 @@ package carlylee.controls
 		public function Refresher(){}
 		
 		public static function getInstance():Refresher{
-			if( !_instance ) _instance = new Refresher();
+			if( _instance != null ) _instance = new Refresher();
 			return _instance;
 		}
 		

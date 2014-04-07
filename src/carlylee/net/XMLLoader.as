@@ -20,8 +20,26 @@
 	/**
 	 * XMLLoader
 	 *
+	 * How to use : 
+	 * var xmlLoader:XMLLoader = new XMLLoader();
+	 * 
+	 * xmlLoader.init( "test.xml" );
+	 * xmlLoader.addEventListener( XMLLoaderEvent.LOAD_COMPLETE, onXMLLoadComplete );
+	 * xmlLoader.addEventListener( XMLLoaderEvent.LOAD_ERROR, onXMLLoaderError );
+	 * or
+	 * xmlLoader.init( "test.xml", completeFunc, errorFunc );
+	 * 
+	 * xmlLoader.load();
+	 * 
+	 * onXMLLoadComplete( $e:XMLLoaderEvent );
+	 * onXMLLoaderError( $error:String );
+	 * 
+	 * completeFunc( $xml:XML );
+	 * errorFunc( $error:String );
+	 * 
 	 * author: Eunjeong, Lee(carly.l86@gmail.com).
-	 * modified: Dec 10, 2013
+	 * created: Dec 10, 2013
+	 * modified: Mar 28, 2014
 	 */
 	public class XMLLoader extends EventDispatcher
 	{
@@ -52,11 +70,11 @@
 		
 		/**
 		 * You must call this function before call 'load()'.
-		 * @param $url(String)
-		 * @param $isPost(Boolean) URLRequestMethod.POS : URLRequestMethod.GET
-		 * @param $urlVar(URLVariables)
-		 * @param $isZipped(Boolean)
-		 * @param $maxTryNumber(int 3)
+		 * @param $url:String
+		 * @param $isPost:Boolean URLRequestMethod.POS : URLRequestMethod.GET
+		 * @param $urlVar:URLVariables
+		 * @param $isZipped:Boolean
+		 * @param $maxTryNumber:int=3
 		 * 
 		 */		
 		public function init( $url:String, 
@@ -104,9 +122,8 @@
 		
 		/**
 		 * You can choose 'Character Set' what you want.
-		 * @param $charSet(String) default: UTF-8
+		 * @param $charSet:String=UTF-8
 		 * http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/charset-codes.html
-		 * 
 		 */		
 		public function load( $charSet:String="UTF-8", $random:Boolean=false ):void{
 			_charSet = $charSet;
@@ -120,6 +137,7 @@
 			_urlRequest.data = _urlVar;
 			_urlLoader.load( _urlRequest );
 		}
+		
 		private function onComplete( $e:Event ):void{
 			_urlLoader.removeEventListener( Event.COMPLETE, onComplete );
 			_urlLoader.removeEventListener( ProgressEvent.PROGRESS, onProgress );
@@ -167,7 +185,7 @@
 			trace( "XMLLoader loading XML data is succeed : " + _urlRequest.url );
 			trace( "Elapsed Time: " + elapsedTime + "ms. Try number: " + _tryNumber );			
 			if ( this.completeFunc == null ) {
-				dispatchEvent( new XMLLoaderEvent( XMLLoaderEvent.DATA_COMPLETE, xml, error ));
+				dispatchEvent( new XMLLoaderEvent( XMLLoaderEvent.LOAD_COMPLETE, xml, error ));
 			}else {
 				this.completeFunc( xml );
 			}
@@ -185,7 +203,7 @@
 				this.reload();
 			}else{
 				if ( this.errorFunc == null ) {
-					this.dispatchEvent( new XMLLoaderEvent( XMLLoaderEvent.COMPLETE_ERROR, null, this.error ));
+					this.dispatchEvent( new XMLLoaderEvent( XMLLoaderEvent.LOAD_ERROR, null, this.error ));
 				}else {
 					this.errorFunc( this.error );
 				}	
@@ -206,7 +224,7 @@
 				trace( "XMLloader reloading XML is failed." );
 				this.error = "XMLLoader load failed / " + _urlRequest.url +"/ Try number: " +_tryNumber; 
 				if ( this.errorFunc == null ) {
-					this.dispatchEvent( new XMLLoaderEvent( XMLLoaderEvent.COMPLETE_ERROR, null, this.error ));
+					this.dispatchEvent( new XMLLoaderEvent( XMLLoaderEvent.LOAD_ERROR, null, this.error ));
 				}else {
 					this.errorFunc( this.error );
 				}

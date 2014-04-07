@@ -15,7 +15,7 @@ package carlylee.utils
 		 * How to use : 
 		 * vector.filter( deleteNullFilterforVector, this ); 
 		 * this: the scope which contains vector.
-		 * @return 
+		 * @return:Boolean 
 		 * 
 		 */		
 		public static function deleteNullFilterforVector( $item:*, $index:int, $vector:Vector.<*> ):Boolean{

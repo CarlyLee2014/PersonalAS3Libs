@@ -2,7 +2,12 @@ package carlylee.events
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-
+	/**
+	 * ImageLoaderEvent
+	 * 
+	 * @author Eunjeong, Lee.
+	 * modified: Mar 28, 2014
+	 */
 	public class ImageLoaderEvent extends Event
 	{
 		public static const LOAD_COMPLETE: String = "loadComplete";

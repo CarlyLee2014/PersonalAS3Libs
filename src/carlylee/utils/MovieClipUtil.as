@@ -14,6 +14,10 @@ package carlylee.utils
 	
 	public class MovieClipUtil
 	{
+		/**
+		 * @param $mc:MovieClip
+		 * @param $reset:Boolean 	if 'true', brings the playhead to the first frame of the movie clip and stops it there.
+		 */
 		public static function freezeMovieClip( $mc:MovieClip, $reset:Boolean=false ):void{
 			var i:int = 0;
 			var mc:MovieClip;
@@ -24,6 +28,9 @@ package carlylee.utils
 			}
 		}
 		
+		/**
+		 * @param $mc::MovieClip
+		 */		
 		public static function unfreezeMovieClip( $mc:MovieClip ):void{
 			var i:int = 0;
 			var mc:MovieClip;
@@ -38,7 +45,7 @@ package carlylee.utils
 		 * Only plays MovieClip to NextFrame.
 		 * When start playing MovieClip, you'll get an 'FrameEvent.FRAME_START' Event.
 		 * When playing MovieClip is done, you'll get an 'FrameEvent.FRAME_ENDED' Event.
-		 * @param $mc(MovieClip)
+		 * @param $mc:MovieClip
 		 * 
 		 */		
 		public static function playNextFrame( $mc:MovieClip ):void{
@@ -60,7 +67,7 @@ package carlylee.utils
 		 * Only plays MovieClip to PrevFrame.
 		 * When start playing MovieClip, you'll get an 'FrameEvent.FRAME_START' Event.
 		 * When playing MovieClip is done, you'll get an 'FrameEvent.FRAME_ENDED' Event.
-		 * @param $mc
+		 * @param $mc:MovieClip
 		 * 
 		 */		
 		public static function playPrevFrame( $mc:MovieClip ):void{

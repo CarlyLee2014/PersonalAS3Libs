@@ -19,14 +19,27 @@ package carlylee.net
 	/**
 	 * SWFLoader
 	 * 
-	 * @ completeFunc( $loader:SWFLoader );
-	 * @ SWFLoaderEvent.LOAD_COMPLETE( $e:SWFLoaderEvent );
+	 * How to use :
+	 * var swfLoader:SWFLoader = new SWFLoader();
 	 * 
-	 * How to use:
-	 * var loader:SWFLoader = $loader or $e.loader.
+	 * swfLoader.init( "swfFileName.swf" );
+	 * swfLoader.addEventListener( SWFLoaderEvent.LOAD_COMPLETE, onSwfLoadComplete );
+	 * swfLoader.addEventListener( IOErrorEvent.IO_ERROR, onSwfLoadError );
+	 * or
+	 * swfLoader.init( "swfFileName.swf", completeFunc, errorFunc );
+	 * 
+	 * swfLoader.load();
+	 * 
+	 * onSwfLoadComplete( $e:SWFLoaderEvent );
+	 * onSwfLoadError( $error:String );
+	 * 
+	 * completeFunc( $loader:SWFLoader );
+	 * errorFunc( $error:String );
+	 * 
+	 * var loader:SWFLoader = $loader or $e.loader;
 	 * var class:Class = loader.getClass( className );
-	 * new class(); 
-	 * And you can use the method of 'class'.
+	 * var obj:Object = new class(); 
+	 * And you can use the method of 'class', like 'obj.classInfo();'.
 	 * 
 	 * Or you can use Dictionary.
 	 * _dict[ className ] = loader.getClass( className );
@@ -37,6 +50,7 @@ package carlylee.net
 	 * 
 	 * author: Eunjeong, Lee(carly.l86@gmail.com).
 	 * created: Dec 16, 2013
+	 * modified: Mar 28, 2014
 	 */
 	
 	public class SWFLoader extends EventDispatcher
@@ -65,13 +79,13 @@ package carlylee.net
 		
 		/**
 		 * 
-		 * @param $url(String)
-		 * @param $completeFunc(Function)
-		 * @param $errorFunc(Function)
-		 * @param $urlVar(URLVariables)
-		 * @param $progressFunc(Function)
-		 * @param $maxTryNumber(int 3)
-		 * @param $initFunc(Function)
+		 * @param $url:String
+		 * @param $completeFunc:Function
+		 * @param $errorFunc:Function
+		 * @param $urlVar:URLVariables=null
+		 * @param $progressFunc:Function=null
+		 * @param $maxTryNumber:int=3
+		 * @param $initFunc:Function=null
 		 * 
 		 */		
 		public function init( $url:String,
@@ -103,7 +117,7 @@ package carlylee.net
 		}
 		
 		/**
-		 * @param $random(Boolean) if it's true 'url?545465', it's not true 'url'.
+		 * @param $random:Boolean=false 	if it's true 'url?545465', it's not true 'url'.
 		 */		
 		public function load( $random:Boolean=false ):void{
 			_startTime = getTimer();

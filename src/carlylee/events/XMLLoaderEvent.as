@@ -1,11 +1,16 @@
 ﻿package carlylee.events
 {
 	import flash.events.Event;
-	
+	/**
+	 * XMLLoaderEvent
+	 * 
+	 * @author Eunjeong, Lee.
+	 * modified: Mar 28, 2014
+	 */	
 	public class XMLLoaderEvent extends Event
 	{
-		public static const DATA_COMPLETE: String = "dataComplete";
-		public static const COMPLETE_ERROR:String = "completeError";
+		public static const LOAD_COMPLETE: String = "loadComplete";
+		public static const LOAD_ERROR:String = "loadError";
 		
 		public var xml: XML;
 		public var error:String;

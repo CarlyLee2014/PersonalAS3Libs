@@ -11,11 +11,11 @@
 		/**
 		 * x,y좌표 사이의 거리를 구한 값을 구한다.
 		 *  
-		 * @param $x1 : 첫번째 무비클립의 x좌표
-		 * @param $x2 : 두번째 무비클립의 x좌표
-		 * @param $y1 : 첫번째 무비클립의 y좌표
-		 * @param $y2 : 두번째 무비클립의 y좌표
-		 * @return Number
+		 * @param $x:Number   first x-coordinate
+		 * @param $y:Number   first y-coordinate
+		 * @param $toX:Number second x-coordinate
+		 * @param $toY:Number second y-coordinate
+		 * @return:Number
 		 */			
 
 		public static function getDistance( $x1:Number, $x2:Number, $y1:Number, $y2:Number ):Number{
@@ -27,12 +27,12 @@
 		
 		/**
 		 * x,y좌표 사이의 거리가 distance보다 작은지 검사하여 반환 
-		 * @param $x1
-		 * @param $x2
-		 * @param $y1
-		 * @param $y2
-		 * @param $distance
-		 * @return Boolean
+		 * @param $x:Number   first x-coordinate
+		 * @param $y:Number   first y-coordinate
+		 * @param $toX:Number second x-coordinate
+		 * @param $toY:Number second y-coordinate
+		 * @param $distance:Number
+		 * @return:Boolean
 		 * 
 		 */		
 		public static function compareDistance( $x1:Number, $x2:Number, $y1:Number, $y2:Number, $distance:Number ):Boolean{
@@ -42,12 +42,12 @@
 		};
 		
 		/**
-		 * 목표지점까지의 각도를 Radian으로 반환 
-		 * @param $x   현재 X좌표
-		 * @param $y   현재 Y좌표
-		 * @param $toX 목표 X좌표
-		 * @param $toY 목표 Y좌표 
-		 * @return Number
+		 * returns angle from start coordinate to target coordinate 
+		 * @param $x:Number   start x-coordinate
+		 * @param $y:Number   start y-coordinate
+		 * @param $toX:Number target x-coordinate
+		 * @param $toY:Number target y-coordinate 
+		 * @return:Number	   radian
 		 * 
 		 */		
 		public static function takeAngleToRadian( $x:Number, $y:Number, $toX:Number, $toY:Number ):Number{
@@ -58,12 +58,12 @@
 		}
 		
 		/**
-		 * 목표지점까지의 각도를 Degree로 반환 
-		 * @param $x   현재 X좌표
-		 * @param $y   현재 Y좌표
-		 * @param $toX 목표 X좌표
-		 * @param $toY 목표 Y좌표 
-		 * @return Number
+		 * returns angle from start coordinate to target coordinate
+		 * @param $x:Number   start x-coordinate
+		 * @param $y:Number   start y-coordinate
+		 * @param $toX:Number target x-coordinate
+		 * @param $toY:Number target y-coordinate 
+		 * @return:Number	   degree
 		 * 
 		 */			
 		public static function takeAngleToDegree( $x:Number, $y:Number, $toX:Number, $toY:Number ):Number{

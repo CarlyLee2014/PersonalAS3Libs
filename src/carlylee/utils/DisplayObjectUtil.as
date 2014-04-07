@@ -29,8 +29,7 @@ package carlylee.utils
 		/**
 		 * Set DisplayObject's color to $RGB value, using ColorTransform.
 		 * @param $displayObject
-		 * @param $RGBCode(uint)
-		 * 
+		 * @param $RGBCode:uint
 		 */		
 		public static function setRGBColorToDisplayObject( $displayObject:DisplayObject, $RGBCode:uint ):void{
 			var colorTransform:ColorTransform = new ColorTransform;
@@ -41,7 +40,6 @@ package carlylee.utils
 		/**
 		 * Set DisplayObject's color to GrayScale using ColorMatrixFilter.
 		 * @param $displayObject
-		 * 
 		 */		
 		public static function setGrayScale( $displayObject:DisplayObject ):void{
 			var colorMatrixFilter:ColorMatrixFilter = new ColorMatrixFilter([ 0.33, 0.33, 0.33, 0, 0,
