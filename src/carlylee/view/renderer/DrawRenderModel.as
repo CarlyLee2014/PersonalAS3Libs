@@ -6,7 +6,7 @@ package carlylee.view.renderer
 	/**
 	 * DrawRenderModel
 	 *
-	 * author: Eunjeong, Lee(ejlee@illusu.com).
+	 * author: Eunjeong, Lee(carly.l86@gmail.com).
 	 * created: Apr 21, 2014
 	 */
 	

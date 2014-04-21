@@ -7,7 +7,7 @@ package carlylee.view.renderer
 	/**
 	 * BitmapDataRenderModel
 	 *
-	 * author: Eunjeong, Lee(ejlee@illusu.com).
+	 * author: Eunjeong, Lee(carly.l86@gmail.com).
 	 * created: Apr 16, 2014
 	 */
 	
@@ -79,6 +79,10 @@ package carlylee.view.renderer
 			if( !eventDispatch ) return;
 			eventDispatch = false;
 			this.dispatchEvent( new Event( Event.COMPLETE ));
+		}
+		
+		public function destroy():void{
+			_image.dispose();
 		}
 	}
 }

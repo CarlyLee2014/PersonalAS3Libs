@@ -7,7 +7,7 @@ package carlylee.view.renderer
 	/**
 	 * MovieClipRenderModel
 	 *
-	 * author: Eunjeong, Lee(ejlee@illusu.com).
+	 * author: Eunjeong, Lee(carly.l86@gmail.com).
 	 * created: Apr 21, 2014
 	 */
 	
@@ -75,6 +75,14 @@ package carlylee.view.renderer
 				}
 			}
 			return _frames[_frame];
+		}
+		
+		public override function destroy():void{
+			var i:int = 0;
+			for( i; i<_frames.length; ++i ){
+				_frames[i].dispose();
+			}
+			linkMovieClip = null;
 		}
 	}
 }
