@@ -9,7 +9,9 @@ package carlylee.utils
 	public class XMLUtil
 	{
 		/**
-		 * If the XML has some garbage data in tail, this function will get rid of XML's garbage data and returns normal XML, which is start and end with $rootName.
+		 * If the XML has some garbage data in tail, 
+		 * this function will get rid of XML's garbage data.
+		 * And then returns normal XML, which is start and end with $rootName.
 		 * @param $XML you want to trim 
 		 * @param $rootName outermost node name
 		 * @return XML

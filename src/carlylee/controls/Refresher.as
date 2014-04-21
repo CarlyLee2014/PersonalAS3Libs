@@ -13,17 +13,9 @@ package carlylee.controls
 	 */
 	public class Refresher
 	{
-		private static var _instance:Refresher;
-		private static var _dict:Dictionary = new Dictionary;//contains of Vector.<RefreshItem>
+		private static var _dict:Dictionary = new Dictionary();//contains of Vector.<RefreshItem>
 		
-		public function Refresher(){}
-		
-		public static function getInstance():Refresher{
-			if( _instance != null ) _instance = new Refresher();
-			return _instance;
-		}
-		
-		public function addRefreshItem( $refreshItem:RefreshItem ):void{
+		public static function addRefreshItem( $refreshItem:RefreshItem ):void{
 			var v:Vector.<RefreshItem>;
 			if( _dict[$refreshItem.key] == undefined ){
 				v = new Vector.<RefreshItem>;
@@ -33,7 +25,7 @@ package carlylee.controls
 			v.push( $refreshItem );
 		}
 		
-		public function executeRefresh( $key:String ):void{
+		public static function executeRefresh( $key:String ):void{
 			if( _dict[$key] == undefined ){
 				throw new Error( "There is no key called [" + $key + "] in Refresher." );
 			}else{
@@ -45,7 +37,7 @@ package carlylee.controls
 			}
 		}
 		
-		public function deleteRefreshWholeKeyItems( $key:String ){
+		public static function deleteRefreshWholeKeyItems( $key:String ){
 			if( _dict[$key] == undefined ){
 				throw new Error( "There is no key called [" + $key + "] in Refresher." );
 			}else{
@@ -53,7 +45,7 @@ package carlylee.controls
 			}
 		}
 		
-		public function deleteRefreshItem( $refreshItem:RefreshItem ):void{
+		public static function deleteRefreshItem( $refreshItem:RefreshItem ):void{
 			if( _dict[$refreshItem.key] == undefined ){
 				throw new Error( "There is no key called [" + $refreshItem.key + "] in Refresher." );
 			}else{
@@ -74,7 +66,7 @@ package carlylee.controls
 			}
 		}
 		
-		public function deleteRefreshItemWithID( $key:String, $id:String ):void{
+		public static function deleteRefreshItemWithID( $key:String, $id:String ):void{
 			if( _dict[$key] == undefined ){
 				throw new Error( "There is no key called [" + $key + "] in Refresher." );
 			}else{
@@ -95,7 +87,7 @@ package carlylee.controls
 			}
 		}
 		
-		public function deleteNull( $item:*, $index:int, $vector:Vector.<*> ):Boolean{
+		public static function deleteNull( $item:*, $index:int, $vector:Vector.<*> ):Boolean{
 			var b:Boolean = false;
 			if( $item != null ) b = true;
 			return b;

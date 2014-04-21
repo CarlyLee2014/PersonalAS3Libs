@@ -22,7 +22,6 @@ package carlylee.controls
 		 * @param $func(Function) The action what you want to.
 		 * @param $thisObject(Object) The object to which the function is applied.
 		 * @param ...$params Elements are passed to the function as parameters.
-		 * 
 		 */		
 		public function RefreshItem( $key:String, $id:String, $func:Function, $thisObject:Object, ...$params ){
 			this.key = $key;

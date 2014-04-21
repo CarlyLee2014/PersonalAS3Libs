@@ -25,10 +25,11 @@
 			str = arr[0] + ".";
 			var i:int = 0;
 			for( i; i<$digit; i++ ){
-				str += s.slice( i,i+1 );
+				str += s.slice( i, i+1 );
 			}
 			return str;
 		}
+		
 		/**
 		 * Number -> Hexadecmial
 		 * @param value:int
@@ -37,7 +38,6 @@
 		 * @return:String 
 		 * 
 		 */		
-		
 		public static function numberToHex( $value:int, $length:int=6, $header:String="0x" ):String{
 			var str: String = $value.toString( 16 ).toUpperCase();
 			// 앞에 붙일 0의 개수 

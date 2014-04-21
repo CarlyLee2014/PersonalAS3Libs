@@ -14,21 +14,17 @@ package carlylee.data.manager
 	
 	public class BitmapDataStorage
 	{
-		private static var _instance:BitmapDataStorage;
-		private var _storage:Dictionary = new Dictionary( true );
+		private static var _storage:Dictionary = new Dictionary();
 		
-		function BitmapDataStorage(){}
-		
-		public static function getInstance():BitmapDataStorage{
-			if( _instance != null ) _instance = new BitmapDataStorage();
-			return _instance;
-		}
-		
-		public function save( $key:String, $bitmapData:BitmapData ):void{
+		public static function save( $key:String, $bitmapData:BitmapData ):void{
 			_storage[ $key ] = $bitmapData;
 		}
 		
-		public function pull( $key:String ):BitmapData{
+		public static function saveVector( $key:String, $bitmapDataVector:Vector.<BitmapData> ):void{
+			_storage[ $key ] = $bitmapDataVector;
+		}
+		
+		public static function pull( $key:String ):BitmapData{
 			if( _storage[ $key ] == null ){
 				trace( "BitmapDataStorage["+$key+"] is null." );
 				return null;
@@ -36,7 +32,15 @@ package carlylee.data.manager
 			return _storage[ $key ];
 		}
 		
-		public function deleteBitmapData( $key:String ):void{
+		public static function pullVector( $key:String ):Vector.<BitmapData>{
+			if( _storage[ $key ] == null ){
+				trace( "BitmapDataStorage["+$key+"] is null." );
+				return null;
+			}
+			return _storage[ $key ];
+		}
+		
+		public static function deleteBitmapData( $key:String ):void{
 			delete _storage[ $key ];
 		}
 	}
