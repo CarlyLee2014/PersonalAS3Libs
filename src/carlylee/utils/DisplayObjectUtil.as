@@ -1,8 +1,11 @@
 package carlylee.utils
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * DisplayObjectUtil
@@ -47,6 +50,33 @@ package carlylee.utils
 																			  0.33, 0.33, 0.33, 0, 0,
 																			  0,    0,    0,    1, 0 ]);
 			$displayObject.filters = [ colorMatrixFilter ];
+		}
+		
+		/**
+		 * 
+		 * @param $displayObject1
+		 * @param $displayObject2
+		 * @return Boolean
+		 * 
+		 */		
+		public static function pixelHitTest( $displayObject1:DisplayObject, $displayObject2:DisplayObject ):Boolean{
+			var b:Boolean = false;
+			var rect1:Rectangle = $displayObject1.getBounds( $displayObject1.parent );
+			var rect2:Rectangle = $displayObject2.getBounds( $displayObject2.parent );
+			var bmd1:BitmapData = draw( $displayObject1 );
+			var bmd2:BitmapData = draw( $displayObject2 );
+			b = bmd1.hitTest( rect1.topLeft, 1, bmd2, rect2.topLeft, 1 );
+			bmd1.dispose();
+			bmd2.dispose();
+			return b;
+		}
+		
+		private static function draw( $displayObject:DisplayObject ):BitmapData{
+			var rect:Rectangle = $displayObject.getBounds( $displayObject );
+			var bp:BitmapData = new BitmapData( rect.width, rect.height, true, 0 );
+			var matrix:Matrix = new Matrix( 1, 0, 0, 1, -rect.x, -rect.y );
+			bp.draw( $displayObject, matrix );
+			return bp;
 		}
 	}
 }

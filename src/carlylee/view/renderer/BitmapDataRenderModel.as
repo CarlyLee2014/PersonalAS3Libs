@@ -27,9 +27,7 @@ package carlylee.view.renderer
 		private var _image:BitmapData;
 		private var _alpha:Number = 10;
 		
-		public function BitmapDataRenderModel()
-		{
-		}
+		public function BitmapDataRenderModel(){}
 		
 		/**
 		 * @param $obj
