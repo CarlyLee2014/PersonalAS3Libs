@@ -20,19 +20,16 @@ package carlylee.net
 	 * SWFLoader
 	 * 
 	 * How to use :
-	 * var swfLoader:SWFLoader = new SWFLoader();
+	 * var swfLoader:SWFLoader = new SWFLoader( "swfFileName.swf", completeFunc, errorFunc );
 	 * 
-	 * swfLoader.init( "swfFileName.swf" );
 	 * swfLoader.addEventListener( SWFLoaderEvent.LOAD_COMPLETE, onSwfLoadComplete );
 	 * swfLoader.addEventListener( IOErrorEvent.IO_ERROR, onSwfLoadError );
-	 * or
-	 * swfLoader.init( "swfFileName.swf", completeFunc, errorFunc );
-	 * 
 	 * swfLoader.load();
 	 * 
 	 * onSwfLoadComplete( $e:SWFLoaderEvent );
 	 * onSwfLoadError( $error:String );
 	 * 
+	 * var swfLoader:SWFLoader = new SWFLoader( "swfFileName.swf" );
 	 * completeFunc( $loader:SWFLoader );
 	 * errorFunc( $error:String );
 	 * 
@@ -75,8 +72,6 @@ package carlylee.net
 		public var domain:ApplicationDomain;
 		public var loaderContext:LoaderContext;
 		
-		public function SWFLoader(){}
-		
 		/**
 		 * 
 		 * @param $url:String
@@ -88,9 +83,9 @@ package carlylee.net
 		 * @param $initFunc:Function=null
 		 * 
 		 */		
-		public function init( $url:String,
-							  $completeFunc:Function,
-							  $errorFunc:Function,
+		public function SWFLoader( $url:String,
+							  $completeFunc:Function=null,
+							  $errorFunc:Function=null,
 							  $urlVar:URLVariables=null,
 							  $progressFunc:Function=null,
 							  $maxTryNumber:int=3,
@@ -169,10 +164,8 @@ package carlylee.net
 		}
 		
 		/**
-		 * 
 		 * @param className(String)
 		 * @return *
-		 * 
 		 */		
 		public function getClass( className:String ):*{
 			try {

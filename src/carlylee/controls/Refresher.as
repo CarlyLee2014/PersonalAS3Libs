@@ -16,40 +16,41 @@ package carlylee.controls
 		private static var _dict:Dictionary = new Dictionary();//contains of Vector.<RefreshItem>
 		
 		public static function addRefreshItem( $refreshItem:RefreshItem ):void{
-			var v:Vector.<RefreshItem>;
-			if( _dict[$refreshItem.key] == undefined ){
-				v = new Vector.<RefreshItem>;
-			}else{
-				v = _dict[$refreshItem.key];
+			if( _dict[$refreshItem.group] == undefined ){
+				_dict[$refreshItem.group] = new Vector.<RefreshItem>;
 			}
-			v.push( $refreshItem );
+			_dict[$refreshItem.group].push( $refreshItem );
 		}
 		
-		public static function executeRefresh( $key:String ):void{
-			if( _dict[$key] == undefined ){
-				throw new Error( "There is no key called [" + $key + "] in Refresher." );
+		public static function executeRefresh( $groupName:String, ...$params ):void{
+			if( _dict[$groupName] == undefined ){
+				throw new Error( "There is no group called [" + $groupName + "] in Refresher." );
 			}else{
-				var v:Vector.<RefreshItem> = _dict[$key];
+				var v:Vector.<RefreshItem> = _dict[$groupName];
 				var i:int = 0;
 				for( i; i<v.length; ++i ){
-					v[i].execute();
+					v[i].func.apply( v[i].thisObject, $params );
 				}
 			}
 		}
 		
-		public static function deleteRefreshWholeKeyItems( $key:String ){
-			if( _dict[$key] == undefined ){
-				throw new Error( "There is no key called [" + $key + "] in Refresher." );
+		public static function getGroup( $groupName:String ):Vector.<RefreshItem>{
+			return _dict[$groupName];
+		}
+		
+		public static function deleteRefreshGroup( $groupName:String ):void{
+			if( _dict[$groupName] == undefined ){
+				throw new Error( "There is no group called [" + $groupName + "] in Refresher." );
 			}else{
-				delete _dict[$key];
+				delete _dict[$groupName];
 			}
 		}
 		
 		public static function deleteRefreshItem( $refreshItem:RefreshItem ):void{
-			if( _dict[$refreshItem.key] == undefined ){
-				throw new Error( "There is no key called [" + $refreshItem.key + "] in Refresher." );
+			if( _dict[$refreshItem.group] == undefined ){
+				throw new Error( "There is no group called [" + $refreshItem.group + "] in Refresher." );
 			}else{
-				var v:Vector.<RefreshItem> = _dict[$refreshItem.key];
+				var v:Vector.<RefreshItem> = _dict[$refreshItem.group];
 				var i:int = 0;
 				for( i; i<v.length; ++i ){
 					if( v[i] == $refreshItem ){
@@ -57,20 +58,20 @@ package carlylee.controls
 						break;
 					}
 				}
-				v = v.filter( deleteNull, this );
+				v = v.filter( deleteNull, Refresher );
 				if( v.length < 1 ){
-					delete _dict[$refreshItem.key];
+					delete _dict[$refreshItem.group];
 				}else{
-					_dict[$refreshItem.key] = v;
+					_dict[$refreshItem.group] = v;
 				}
 			}
 		}
 		
-		public static function deleteRefreshItemWithID( $key:String, $id:String ):void{
-			if( _dict[$key] == undefined ){
-				throw new Error( "There is no key called [" + $key + "] in Refresher." );
+		public static function deleteRefreshItemWithID( $groupName:String, $id:String ):void{
+			if( _dict[$groupName] == undefined ){
+				throw new Error( "There is no group called [" + $groupName + "] in Refresher." );
 			}else{
-				var v:Vector.<RefreshItem> = _dict[$key];
+				var v:Vector.<RefreshItem> = _dict[$groupName];
 				var i:int = 0;
 				for( i; i<v.length; ++i ){
 					if( v[i].id == $id ){
@@ -78,11 +79,11 @@ package carlylee.controls
 						break;
 					}
 				}
-				v = v.filter( deleteNull, this );
+				v = v.filter( deleteNull, Refresher );
 				if( v.length < 1 ){
-					delete _dict[$key];
+					delete _dict[$groupName];
 				}else{
-					_dict[$key] = v;
+					_dict[$groupName] = v;
 				}
 			}
 		}

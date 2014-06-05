@@ -53,11 +53,9 @@ package carlylee.utils
 		}
 		
 		/**
-		 * 
 		 * @param $displayObject1
 		 * @param $displayObject2
 		 * @return Boolean
-		 * 
 		 */		
 		public static function pixelHitTest( $displayObject1:DisplayObject, $displayObject2:DisplayObject ):Boolean{
 			var b:Boolean = false;

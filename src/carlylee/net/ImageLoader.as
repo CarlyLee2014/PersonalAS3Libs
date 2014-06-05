@@ -17,13 +17,10 @@
 	 * ImageLoader
 	 * 
 	 * How to use :
-	 * var imgLoader:ImageLoader = new ImageLoader();
-	 * 
-	 * imgLoader.init( "img.jpg" );
+	 * var imgLoader:ImageLoader = new ImageLoader( "img.jpg", completeFunc, errorFunc );
 	 * imgLoader.addEventListener( ImageLoaderEvent.LOAD_COMPLETE, onImageLoadComplete );
 	 * imgLoader.addEventListener( IOErrorEvent.IO_ERROR, onImageLoadError );
-	 * or
-	 * imgLoader.init( "img.jpg", completeFunc, errorFunc );
+	 * imgLoader.load();
 	 * 
 	 * onImageLoadComplete( $e:ImageLoaderEvent );
 	 * onImageLoadError( $error:String );
@@ -54,8 +51,6 @@
 		public var data:Object;
 		public var displayObject:DisplayObject;
 		
-		public function ImageLoader(){}
-		
 		/**
 		 * @param $url:String
 		 * @param $completeFunc:Function
@@ -66,9 +61,9 @@
 		 * @param $initFunc:Function=null
 		 * 
 		 */		
-		public function init( $url:String,
+		public function ImageLoader( $url:String,
 							  $completeFunc:Function,
-							  $errorFunc:Function,
+							  $errorFunc:Function=null,
 							  $progressFunc:Function=null,
 							  $maxTryNumber:int=3,
 							  $smoothing:Boolean=false,
@@ -128,11 +123,11 @@
 			var elapsedTime:int = getTimer() - _startTime;
 			trace( "ImageLoader loading image is succeed : " + _urlRequest.url );
 			trace( "Elapsed Time: " + elapsedTime + "ms. Try number: " + _tryNumber );	
-			this.displayObject = $e.target.content;
-			if( smoothing ){
-				try{
-					Bitmap( displayObject ).smoothing = true;
-				}catch($e:Error){}
+			try{
+				this.displayObject = $e.target.content;
+				if( smoothing ) Bitmap( displayObject ).smoothing = true;
+			}catch($e:Error){
+				this.displayObject = _loader;
 			}
 			if( this.completeFunc == null ){
 				this.dispatchEvent( new ImageLoaderEvent( ImageLoaderEvent.LOAD_COMPLETE, displayObject, this.data ));	
@@ -170,16 +165,3 @@
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

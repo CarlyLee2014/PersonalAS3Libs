@@ -193,7 +193,7 @@
 		 * 
 		 */		
 		public static function timeFormatHour( $seconds:int ):String{
-			return int(( $seconds/3600 )+1);
+			return String( int(( $seconds/3600 )+1));
 		}
 		
 		/**
@@ -203,7 +203,7 @@
 		 * 
 		 */		
 		public static function timeFormatHourUsingMS( $ms:int ):String{
-			return int(( $ms/3600000 )+1);
+			return String( int(( $ms/3600000 )+1));
 		}
 		
 		/**
@@ -261,7 +261,7 @@
 			if( $isMillisecond ){
 				return String( $seconds/60000 );
 			}else{
-				return String( $seconds/60 ;
+				return String( $seconds/60 );
 			}
 		}
 		
