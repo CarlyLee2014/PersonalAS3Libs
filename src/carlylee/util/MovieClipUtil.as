@@ -1,9 +1,9 @@
-package carlylee.utils
+package carlylee.util
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
-	import carlylee.events.FrameEvent;
+	import carlylee.event.FrameEvent;
 	
 	/**
 	 * MovieClipUtil

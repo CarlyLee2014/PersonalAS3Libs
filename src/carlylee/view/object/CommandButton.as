@@ -1,4 +1,4 @@
-package carlylee.view.objects
+package carlylee.view.object
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -6,7 +6,7 @@ package carlylee.view.objects
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
-	import carlylee.controls.Command;
+	import carlylee.control.Command;
 	
 	public class CommandButton extends Sprite
 	{

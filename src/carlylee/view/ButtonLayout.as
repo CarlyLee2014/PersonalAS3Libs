@@ -2,7 +2,7 @@ package carlylee.view
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Rectangle;
-	import carlylee.view.objects.CommandButton;
+	import carlylee.view.object.CommandButton;
 	
 	
 	public class ButtonLayout

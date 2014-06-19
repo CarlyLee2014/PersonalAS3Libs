@@ -12,7 +12,7 @@
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
-	import carlylee.events.ImageLoaderEvent;
+	import carlylee.event.ImageLoaderEvent;
 	/**
 	 * ImageLoader
 	 * 
@@ -62,7 +62,7 @@
 		 * 
 		 */		
 		public function ImageLoader( $url:String,
-							  $completeFunc:Function,
+							  $completeFunc:Function=null,
 							  $errorFunc:Function=null,
 							  $progressFunc:Function=null,
 							  $maxTryNumber:int=3,
@@ -117,6 +117,7 @@
 		}
 				
 		private function onComplete( $e:Event ): void{
+			trace( "ImageLoader.onComplete: " + _loader );
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
@@ -151,7 +152,6 @@
 					this.error = $e.toString();
 					this.errorFunc( this.error );
 				}
-				_loader = null;
 			}
 		}
 		
@@ -162,6 +162,13 @@
 			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
 			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			setTimeout( load, RETRY_DELAY );
+		}
+		
+		public function unload():void{
+			if( _loader == null ) return;
+			displayObject = null;
+			_loader.unloadAndStop();
+			_loader = null;
 		}
 	}
 }

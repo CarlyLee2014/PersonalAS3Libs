@@ -14,8 +14,8 @@
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
-	import carlylee.events.XMLLoaderEvent;
-	import carlylee.utils.XMLUtil;
+	import carlylee.event.XMLLoaderEvent;
+	import carlylee.util.XMLUtil;
 
 	/**
 	 * XMLLoader

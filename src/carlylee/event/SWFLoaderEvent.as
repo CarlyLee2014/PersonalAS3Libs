@@ -1,4 +1,4 @@
-package carlylee.events
+package carlylee.event
 {
 	import flash.events.Event;
 	import carlylee.net.SWFLoader;

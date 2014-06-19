@@ -1,4 +1,4 @@
-package carlylee.utils
+package carlylee.util
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -61,15 +61,15 @@ package carlylee.utils
 			var b:Boolean = false;
 			var rect1:Rectangle = $displayObject1.getBounds( $displayObject1.parent );
 			var rect2:Rectangle = $displayObject2.getBounds( $displayObject2.parent );
-			var bmd1:BitmapData = draw( $displayObject1 );
-			var bmd2:BitmapData = draw( $displayObject2 );
+			var bmd1:BitmapData = drawBitmapData( $displayObject1 );
+			var bmd2:BitmapData = drawBitmapData( $displayObject2 );
 			b = bmd1.hitTest( rect1.topLeft, 1, bmd2, rect2.topLeft, 1 );
 			bmd1.dispose();
 			bmd2.dispose();
 			return b;
 		}
 		
-		private static function draw( $displayObject:DisplayObject ):BitmapData{
+		public static function drawBitmapData( $displayObject:DisplayObject ):BitmapData{
 			var rect:Rectangle = $displayObject.getBounds( $displayObject );
 			var bp:BitmapData = new BitmapData( rect.width, rect.height, true, 0 );
 			var matrix:Matrix = new Matrix( 1, 0, 0, 1, -rect.x, -rect.y );

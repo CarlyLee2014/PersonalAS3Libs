@@ -1,4 +1,4 @@
-package carlylee.controls
+package carlylee.control
 {
 	
 	/**
@@ -17,17 +17,17 @@ package carlylee.controls
 		 * 
 		 * @param $func(Function) The action what you want to.
 		 * @param $thisObject(Object) The object to which the function is applied.
-		 * @param ...$params Elements are passed to the function as parameters.
+		 * @param ...$parameters Elements are passed to the function as parameters.
 		 * 
 		 */		
-		public function FuncExecutor( $func:Function, $thisObject:Object, ...$params ){
+		public function FuncExecutor( $func:Function, $thisObject:Object, ...$parameters ){
 			this.func = $func;
 			this.thisObject = $thisObject;
-			this.prameters = $params;
+			this.prameters = $parameters;
 		}
 		
-		public function execute():void{
-			func.apply( thisObject, prameters );
+		public function execute():*{
+			return func.apply( thisObject, prameters );
 		}
 	}
 }

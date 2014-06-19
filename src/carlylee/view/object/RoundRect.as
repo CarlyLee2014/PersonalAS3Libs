@@ -1,4 +1,4 @@
-package carlylee.view.objects
+package carlylee.view.object
 {
 	import flash.display.Graphics;
 	import carlylee.view.BaseShape;

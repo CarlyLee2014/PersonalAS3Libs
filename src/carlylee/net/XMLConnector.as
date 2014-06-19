@@ -6,7 +6,7 @@ package carlylee.net
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
-	import carlylee.events.XMLLoaderEvent;
+	import carlylee.event.XMLLoaderEvent;
 	
 	
 	/**

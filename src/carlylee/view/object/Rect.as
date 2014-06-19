@@ -1,22 +1,21 @@
-package carlylee.view.objects
+package carlylee.view.object
 {
 	import flash.display.Graphics;
 	import carlylee.view.BaseShape;
 	
-
-	/**
-	 *@Author Eunjeong Lee
-	 *@Date Mar 30, 2012
-	 */
-	public class Circle extends BaseShape
+	
+	public class Rect extends BaseShape
 	{
 		private var _x: Number = 0;
 		private var _y: Number = 0;
-		private var _radius: Number = 100;
+		private var _width: Number = 100;
+		private var _height: Number = 100;
 		
-		public function Circle( radius:Number = 100, x:Number=0, y:Number=0 )
+		public function Rect( width:Number = 100, height:Number = 100, x:Number = 0, y:Number = 0 )
 		{
-			this._radius = radius;
+			super();
+			this._width = width;
+			this._height = height;
 			this._x = x;
 			this._y = y;
 			this.drawMain();
@@ -30,8 +29,26 @@ package carlylee.view.objects
 				g.lineStyle( this.lineThickness, this.lineColor, this.lineAlpha, true );
 			}
 			g.beginFill( this.fillColor, this.fillAlpha );
-			g.drawCircle( _x, _y, this._radius );
+			g.drawRect( _x, _y, this._width, this._height );
 			g.endFill();
 		}
+		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

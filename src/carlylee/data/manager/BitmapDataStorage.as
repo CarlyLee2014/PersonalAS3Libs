@@ -1,6 +1,9 @@
 package carlylee.data.manager
 {
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
 	/**
@@ -15,6 +18,14 @@ package carlylee.data.manager
 	public class BitmapDataStorage
 	{
 		private static var _storage:Dictionary = new Dictionary();
+		
+		public static function saveDisplayObejctToBitmapData( $key:String, $displayObject:DisplayObject ):void{
+			var rect:Rectangle = $displayObject.getBounds( $displayObject );
+			var bp:BitmapData = new BitmapData( rect.width, rect.height, true, 0 );
+			var matrix:Matrix = new Matrix( 1, 0, 0, 1, -rect.x, -rect.y );
+			bp.draw( $displayObject, matrix );
+			_storage[ $key ] = bp;
+		}
 		
 		public static function save( $key:String, $bitmapData:BitmapData ):void{
 			_storage[ $key ] = $bitmapData;

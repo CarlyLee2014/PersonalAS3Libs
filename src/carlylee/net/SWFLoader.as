@@ -14,7 +14,8 @@ package carlylee.net
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
-	import carlylee.events.SWFLoaderEvent;
+	import carlylee.event.SWFLoaderEvent;
+	import carlylee.util.ExtraUtil;
 	
 	/**
 	 * SWFLoader
@@ -191,7 +192,7 @@ package carlylee.net
 					this.error = $e.toString();
 					this.errorFunc( this.error );
 				}
-				_loader = null;
+				this.unload();
 			}
 		}
 		
@@ -202,6 +203,13 @@ package carlylee.net
 			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
 			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			setTimeout( load, RETRY_DELAY );
+		}
+		
+		public function unload():void{
+			if( _loader == null ) return;
+			swf = null;
+			_loader.unloadAndStop();
+			_loader = null;
 		}
 	}
 }

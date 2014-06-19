@@ -1,4 +1,4 @@
-package carlylee.controls
+package carlylee.control
 {
 	import flash.utils.Dictionary;
 	
@@ -54,7 +54,7 @@ package carlylee.controls
 				var i:int = 0;
 				for( i; i<v.length; ++i ){
 					if( v[i] == $refreshItem ){
-						v[i] == null;
+						v[i] = null;
 						break;
 					}
 				}
@@ -75,7 +75,7 @@ package carlylee.controls
 				var i:int = 0;
 				for( i; i<v.length; ++i ){
 					if( v[i].id == $id ){
-						v[i] == null;
+						v[i] = null;
 						break;
 					}
 				}

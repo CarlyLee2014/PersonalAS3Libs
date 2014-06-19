@@ -1,4 +1,4 @@
-package carlylee.events
+package carlylee.event
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
