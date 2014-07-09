@@ -4,10 +4,20 @@ package carlylee.view.object
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import game.data.manager.SoundManager;
+	import game.define.SOUND;
+	
+	/**
+	 * RollOverFrameButton
+	 * 
+	 * author: Eunjeong, Lee(carly.l86@gmail.com).
+	 * created: June 5, 2014
+	 */
 	public class RollOverFrameButton extends Sprite	
 	{
 		public var id:int;
 		public var isOn:Boolean = false;
+		public var soundEffect:Boolean = true;
 		
 		private var _clip:MovieClip;
 		private var _labelMode:Boolean = false;
@@ -28,6 +38,8 @@ package carlylee.view.object
 				_clip.gotoAndStop( 4 );
 			}
 			_clip.buttonMode = false;
+			_clip.mouseChildren = _clip.mouseEnabled = false;
+			this.mouseChildren = this.mouseEnabled = false;
 			_clip.removeEventListener( MouseEvent.MOUSE_DOWN, onDown );
 			_clip.removeEventListener( MouseEvent.ROLL_OVER, onOver );
 			_clip.removeEventListener( MouseEvent.ROLL_OUT, onOut );
@@ -36,6 +48,8 @@ package carlylee.view.object
 		public function setEnable():void{
 			this.onOut();
 			_clip.buttonMode = true;
+			_clip.mouseChildren = _clip.mouseEnabled = true;
+			this.mouseChildren = this.mouseEnabled = true;
 			_clip.addEventListener( MouseEvent.ROLL_OVER, onOver );
 			_clip.addEventListener( MouseEvent.ROLL_OUT, onOut );
 			_clip.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
@@ -57,6 +71,8 @@ package carlylee.view.object
 			}else{
 				_clip.gotoAndStop( 2 );
 			}
+			if( soundEffect && $e!=null ) SoundManager.play( SOUND.MOUSE_OVER );
+			if( $e!=null ) this.dispatchEvent( $e );
 		}
 		
 		private function onOut( $e:MouseEvent=null ):void{
@@ -66,6 +82,7 @@ package carlylee.view.object
 			}else{
 				_clip.gotoAndStop( 1 );
 			}
+			if( $e!=null ) this.dispatchEvent( $e );
 		}
 		
 		private function onDown( $e:MouseEvent ):void{

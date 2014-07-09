@@ -11,11 +11,31 @@
 	{
 		
 		/**
-		 * 
+		 * @param $value
+		 * @return:String  
+		 */		
+		public static function trim( $value:String ):String{
+			var i:int = 0;
+			for( i; i<$value.length; ++i ){
+				if( $value.charAt( i ) != " " ){
+					$value = $value.substring( i );
+					break;
+				}
+			}
+			i = $value.length-1;
+			for( i; i>0; --i ){
+				if( $value.charAt( i ) != " " ){
+					$value = $value.substring( 0, i+1 );
+					break;
+				}
+			}
+			return $value;
+		}
+		
+		/**
 		 * @param $n:Number
 		 * @param $digit:int 남길 소수 자리 
 		 * @return:String 
-		 * 
 		 */		
 		public static function formatNumberWithDot( $n:Number, $digit:int=2 ):String{
 			var str:String = "";
@@ -56,7 +76,6 @@
 		 * @param value:int
 		 * @param num:int=2 value.length+(value.length-num);
 		 * @return:String
-		 * 
 		 */		
 		
 		public static function addZeros( $value:int, $num:int=2 ):String{
@@ -110,8 +129,7 @@
 		}
 		
 		/**
-		 * compare two Strings, return number of same chracters.
-		 * 두개의 문자열을 비교하여 같은 문자열의 갯수를 반환합니다. 
+		 * Compares two Strings then returns number of same chracters.
 		 * @param string1:String
 		 * @param string2:String
 		 * @return:int 
@@ -126,10 +144,11 @@
 			return count;
 		}
 		/**
-		 * 두개의 문자열을 비교하여 같은 정도를 1을 기준으로 반환합니다. 
+		 * Compares two Strings then returns an integral value indicating the relationship between the strings.
+		 * If they are equal to each other, it returns 1.
 		 * @param string1:String
 		 * @param string2:String
-		 * @return:String 
+		 * @return:Number 			0 ~ 1
 		 * 
 		 */		
 		public static function strcmpPercent( $string1:String, $string2:String ):Number{
@@ -153,8 +172,7 @@
 		}
 		
 		/**
-		 * return String's byte size.
-		 * 문자열의 바이트 크기를 반환 
+		 * Return String's byte size.
 		 * @param str:String
 		 * @param encode:String
 		 * @return:String 
@@ -168,16 +186,52 @@
 		}
 		
 		/**
-		 * 
-		 * @param $num 		1000000 -> 1,000,000
-		 * @return:String 
+		 * 1234567.85256 -> 1,234,567.85256
+		 * @param $num
+		 * @param $digit(default=0) 1234567.85256 -> 1,234,567
+		 * @return 
 		 * 
 		 */		
-		public static function formatNumberWithCommas( $num:String ):String{
-			var strNum:String = $num;
-			if( strNum.length<4 )
-				return strNum;
-			return formatNumberWithCommas(strNum.slice(0, -3))+","+strNum.slice(-3);
+		public static function formatNumberWithCommas( $num:Number, $digit:int=0 ):String{
+			var largeNumber:String = String( $num );
+			var front:Array = largeNumber.split(".");
+			var reg:RegExp=/\d{1,3}(?=(\d{3})+(?!\d))/;
+			while( reg.test(front[0]) )
+				front[0] = front[0].replace(reg,"$&,");
+			if( front.length>1 ){
+				if( $digit > 0 ){
+					while( front[1].length<$digit ) front[1] += "0";
+					front[1] = front[1].substr( 0, $digit );
+				}
+				else front.splice( 1, 1 );
+			}
+			return front.join(".");
+		}
+		
+		/**
+		 * 1000 -> 1k
+		 * 1000000 -> 1m
+		 * 1000000000 -> 1b
+		 * 1000000000000 -> 1t
+		 * 
+		 * @param $num
+		 * @param $capital(false)	
+		 * @param $digit(default=2)		1.82k
+		 * @param $iteration			This is used inside method, don't set the factor.
+		 * @return 
+		 */		
+		public static function formattingNumberWithChar( $num:Number, $capital:Boolean=false, $digit:int=2, $iteration:int=0 ):String{
+			if( $num < 1000 ) return String( $num );
+			var char:String = "kmbt";
+			if( $capital ) char = "KMBT";
+			$num = $num/1000;
+			while( $num>=1000 && $iteration<char.length ){
+				$num = $num/1000;
+				$iteration ++;
+			}
+			var pow:int = Math.pow( 10, $digit );
+			$num = Math.round( $num*pow )/pow;
+			return $num + char.charAt( $iteration );
 		}
 		
 		public static function datetimeFormat( $time:Number ):String {
@@ -187,30 +241,24 @@
 		}
 		
 		/**
-		 * 
 		 * @param $seconds:int 	3600
-		 * @return:String 		1. only returns Hour.
-		 * 
+		 * @return:String 		1. Returns only hour.
 		 */		
 		public static function timeFormatHour( $seconds:int ):String{
 			return String( int(( $seconds/3600 )+1));
 		}
 		
 		/**
-		 * 
-		 * @param $ms:int 	millisecond 3600000
-		 * @return:String 	1. only returns Hour.
-		 * 
+		 * @param $ms:int 	millisecond. 3600000
+		 * @return:String 	1. Returns only hour.
 		 */		
 		public static function timeFormatHourUsingMS( $ms:int ):String{
 			return String( int(( $ms/3600000 )+1));
 		}
 		
 		/**
-		 * 
 		 * @param $seconds:int 	9925
 		 * @return:String 		02:45:25
-		 * 
 		 */		
 		public static function timeFormatColonHourMinSec( $seconds:int ):String {
 			var hour:int = $seconds/3600;
@@ -285,11 +333,63 @@
 						str = str.replace( "|" + i + "|", $valObject[i] );
 					}
 				}
-				
 			}catch ( e:Error ) {
 				trace( "StringUtil Error!! - " + e.name + " : " + e.message );
 			}
 			return str;
+		}
+		
+		public static function addOrdinal( $order:int ):String{
+			if (( $order % 100 < 20 ) && ( $order % 100 > 10 )) {
+				return "th";
+			}else{
+				switch (int($order%10)) {
+					case 1:
+						return "st";
+					case 2:
+						return "nd";
+					case 3:
+						return "rd";
+				}
+			}
+			return "th";
+		}
+		
+		public static function makeNumberToOrdinal( $order:int ):String{
+			switch( $order ){
+				case 1 :
+					return "first";
+				case 2 :
+					return "second";
+				case 3 :
+					return "third";
+				case 11 :
+					return "eleven";
+				case 12 :
+					return "twelfth";
+				default :
+					return null;
+			}
+			return null;
+		}
+		
+		public static function makePlural( $str:String ):String{
+			var _vowels:String = "aeiouAEIOU";
+			if (($str.substr(-2) == "ff") || ($str.substr(-2) == "fe")) {
+				return $str.substr(0, -2) + "ves";
+			}else if($str.substr(-1) == "s") {
+				return $str + "es";
+			}else if(( $str.substr(-1) == "y" ) && (_vowels.indexOf($str.substr(-2, 1)) == -1 )) {
+				return $str.substr(0, -1) + "ies";
+			}else{
+				return $str + "s";
+			}
+		}
+		
+		public static function makeSingular( $str:String ):String{
+			var vowels:String = "aeiouAEIOU";
+			if ( vowels.indexOf($str.substr(0, 1)) == -1 ) return "a " + $str;
+			else return "an " + $str;
 		}
 	}
 }

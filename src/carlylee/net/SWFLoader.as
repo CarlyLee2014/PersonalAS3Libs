@@ -11,6 +11,7 @@ package carlylee.net
 	import flash.net.URLVariables;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
+	import flash.system.SecurityDomain;
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
@@ -61,7 +62,6 @@ package carlylee.net
 		private var _tryNumber:int = 0;
 		private var _maxTryNumber:int = 3;
 		private var _startTime:int;
-		private var _lastTime:int;
 		
 		public var error:String;
 		public var initFunc:Function;
@@ -89,6 +89,7 @@ package carlylee.net
 							  $errorFunc:Function=null,
 							  $urlVar:URLVariables=null,
 							  $progressFunc:Function=null,
+							  $estimatedBytes:int=100,
 							  $maxTryNumber:int=3,
 							  $initFunc:Function=null ):void{
 			
@@ -118,21 +119,23 @@ package carlylee.net
 		public function load( $random:Boolean=false ):void{
 			_startTime = getTimer();
 			if( $random ){
-				if( _lastTime >= _startTime ) _startTime = _lastTime+1;
-				_urlVar.random = String( Math.random() );
-				_urlRequest.data = _urlVar;
+				_urlRequest.url = _urlRequest.url + "?" + Math.random();
 			}
 			_tryNumber ++;
 			if( loaderContext == null ){
 				loaderContext = new LoaderContext();
 				loaderContext.applicationDomain = ApplicationDomain.currentDomain;
+				loaderContext.securityDomain = SecurityDomain.currentDomain;
+				loaderContext.checkPolicyFile = true;
 			}
+			_urlRequest.data = _urlVar;
+			
 			_loader.load( this._urlRequest, loaderContext );
 		}
 		
 		private function onProgress( $e:ProgressEvent ):void{
 			if ( this.progressFunc == null ) {
-				dispatchEvent( $e.clone() );
+				dispatchEvent( $e );
 			}else {
 				this.progressFunc( $e );
 			}

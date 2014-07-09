@@ -8,11 +8,13 @@
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
-	import flash.net.URLVariables;
+	import flash.system.LoaderContext;
+	import flash.system.SecurityDomain;
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
 	import carlylee.event.ImageLoaderEvent;
+
 	/**
 	 * ImageLoader
 	 * 
@@ -40,7 +42,6 @@
 		private var _tryNumber:int = 0;
 		private var _maxTryNumber:int = 3;
 		private var _startTime:int;
-		private var _lastTime:int;
 		
 		public var smoothing:Boolean = false;
 		public var error:String;
@@ -50,6 +51,7 @@
 		public var progressFunc:Function;
 		public var data:Object;
 		public var displayObject:DisplayObject;
+		public var loaderContext:LoaderContext;
 		
 		/**
 		 * @param $url:String
@@ -88,15 +90,19 @@
 		 * @param $random:Boolean=false	 if it's true 'url?545465', it's not true 'url'.
 		 */		
 		public function load( $random:Boolean=false ):void{
+			if( _loader==null ) return;
 			_startTime = getTimer();
 			if( $random ){
-				if( _lastTime >= _startTime ) _startTime = _lastTime+1;
-				var _urlVar:URLVariables = new URLVariables;
-				_urlVar.random = String( Math.random() );
-				_urlRequest.data = _urlVar;
+				_urlRequest.url = _urlRequest.url + "?" + Math.random();
 			}
 			_tryNumber ++;
-			_loader.load( this._urlRequest );
+			
+			if( loaderContext==null ){
+				loaderContext= new LoaderContext();
+				loaderContext.securityDomain = SecurityDomain.currentDomain;
+				loaderContext.checkPolicyFile = true;
+			}
+			_loader.load( this._urlRequest, loaderContext );
 		}
 		
 		private function onProgress( $e:ProgressEvent ):void{
@@ -118,6 +124,7 @@
 				
 		private function onComplete( $e:Event ): void{
 			trace( "ImageLoader.onComplete: " + _loader );
+			if( _loader==null ) return;
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
@@ -138,6 +145,7 @@
 		}
 		
 		private function onIOError( $e:IOErrorEvent ):void{
+			if( _loader==null ) return;
 			_loader.contentLoaderInfo.removeEventListener( Event.INIT, onInit );
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
@@ -156,7 +164,6 @@
 		}
 		
 		private function reload():void{
-			_loader = new Loader;
 			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
@@ -164,10 +171,10 @@
 			setTimeout( load, RETRY_DELAY );
 		}
 		
-		public function unload():void{
+		public function unload( $gc:Boolean=true ):void{
 			if( _loader == null ) return;
 			displayObject = null;
-			_loader.unloadAndStop();
+			_loader.unloadAndStop( $gc );
 			_loader = null;
 		}
 	}
