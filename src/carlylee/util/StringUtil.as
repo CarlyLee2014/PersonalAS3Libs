@@ -11,6 +11,7 @@
 	{
 		
 		/**
+		 * Get rid of space from $string and returns.
 		 * @param $value
 		 * @return:String  
 		 */		
@@ -30,24 +31,6 @@
 				}
 			}
 			return $value;
-		}
-		
-		/**
-		 * @param $n:Number
-		 * @param $digit:int 남길 소수 자리 
-		 * @return:String 
-		 */		
-		public static function formatNumberWithDot( $n:Number, $digit:int=2 ):String{
-			var str:String = "";
-			var arr:Array = String( $n ).split( "." );
-			if( arr.length < 2 ) return str = String( $n );
-			var s:String = arr[1];
-			str = arr[0] + ".";
-			var i:int = 0;
-			for( i; i<$digit; i++ ){
-				str += s.slice( i, i+1 );
-			}
-			return str;
 		}
 		
 		/**
@@ -89,24 +72,7 @@
 		}
 		
 		/**
-		 * Get rid of space frome $string and returns.
-		 * @param $string:String
-		 * @return String:String 
-		 * 
-		 */		
-		public static function trimString( $string:String ):String{
-			var str:String = "";
-			var i:int = 0;
-			for( i; i<$string.length; ++i ){
-				if( $string.charAt(i) != " " ){
-					str += $string.charAt(i);
-				}
-			}
-			return str;
-		}
-		
-		/**
-		 * Check texts spelling without space. 
+		 * Check String's spelling without space. 
 		 * @param $string1:String
 		 * @param $string2:String
 		 * @return:Boolean
@@ -133,7 +99,6 @@
 		 * @param string1:String
 		 * @param string2:String
 		 * @return:int 
-		 * 
 		 */		
 		public static function strcmp( $string1:String, $string2:String ):int{
 			var count:int = 0;
@@ -176,7 +141,6 @@
 		 * @param str:String
 		 * @param encode:String
 		 * @return:String 
-		 * 
 		 */		
 		public static function getByteSize( $str:String, $encode:String="UTF-8" ):int{
 			var tmp: ByteArray = new ByteArray();
@@ -185,59 +149,11 @@
 			return result;
 		}
 		
-		/**
-		 * 1234567.85256 -> 1,234,567.85256
-		 * @param $num
-		 * @param $digit(default=0) 1234567.85256 -> 1,234,567
-		 * @return 
-		 * 
-		 */		
-		public static function formatNumberWithCommas( $num:Number, $digit:int=0 ):String{
-			var largeNumber:String = String( $num );
-			var front:Array = largeNumber.split(".");
-			var reg:RegExp=/\d{1,3}(?=(\d{3})+(?!\d))/;
-			while( reg.test(front[0]) )
-				front[0] = front[0].replace(reg,"$&,");
-			if( front.length>1 ){
-				if( $digit > 0 ){
-					while( front[1].length<$digit ) front[1] += "0";
-					front[1] = front[1].substr( 0, $digit );
-				}
-				else front.splice( 1, 1 );
-			}
-			return front.join(".");
-		}
-		
-		/**
-		 * 1000 -> 1k
-		 * 1000000 -> 1m
-		 * 1000000000 -> 1b
-		 * 1000000000000 -> 1t
-		 * 
-		 * @param $num
-		 * @param $capital(false)	
-		 * @param $digit(default=2)		1.82k
-		 * @param $iteration			This is used inside method, don't set the factor.
-		 * @return 
-		 */		
-		public static function formattingNumberWithChar( $num:Number, $capital:Boolean=false, $digit:int=2, $iteration:int=0 ):String{
-			if( $num < 1000 ) return String( $num );
-			var char:String = "kmbt";
-			if( $capital ) char = "KMBT";
-			$num = $num/1000;
-			while( $num>=1000 && $iteration<char.length ){
-				$num = $num/1000;
-				$iteration ++;
-			}
-			var pow:int = Math.pow( 10, $digit );
-			$num = Math.round( $num*pow )/pow;
-			return $num + char.charAt( $iteration );
-		}
-		
 		public static function datetimeFormat( $time:Number ):String {
 			var date:Date = new Date();
 			date.time = $time*1000;
-			return date.fullYear+"-"+addZeros(date.month+1)+"-"+addZeros(date.date)+" "+addZeros(date.hours)+":"+addZeros(date.minutes)+":"+addZeros(date.seconds);
+			return date.fullYear+"-"+addZeros(date.month+1)+"-"+addZeros(date.date)+" "+
+				addZeros(date.hours)+":"+addZeros(date.minutes)+":"+addZeros(date.seconds);
 		}
 		
 		/**
@@ -337,22 +253,6 @@
 				trace( "StringUtil Error!! - " + e.name + " : " + e.message );
 			}
 			return str;
-		}
-		
-		public static function addOrdinal( $order:int ):String{
-			if (( $order % 100 < 20 ) && ( $order % 100 > 10 )) {
-				return "th";
-			}else{
-				switch (int($order%10)) {
-					case 1:
-						return "st";
-					case 2:
-						return "nd";
-					case 3:
-						return "rd";
-				}
-			}
-			return "th";
 		}
 		
 		public static function makeNumberToOrdinal( $order:int ):String{
