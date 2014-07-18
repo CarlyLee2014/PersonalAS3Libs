@@ -1,5 +1,11 @@
 package carlylee.util
 {
+	/**
+	 * NumberFormatter
+	 * 
+	 * author: Eunjeong, Lee(carly.l86@gmail.com).
+	 * created: July 10, 2014
+	 */
 	public class NumberFormatter
 	{
 		/**

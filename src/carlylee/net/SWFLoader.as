@@ -108,9 +108,9 @@ package carlylee.net
 			
 			_loader = new Loader;
 			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete );
-			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress );
-			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
-			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
 		}
 		
 		/**
@@ -129,11 +129,11 @@ package carlylee.net
 				loaderContext.checkPolicyFile = true;
 			}
 			_urlRequest.data = _urlVar;
-			
 			_loader.load( this._urlRequest, loaderContext );
 		}
 		
 		private function onProgress( $e:ProgressEvent ):void{
+			trace( "SWFLoader.onProgress : " + _loader.contentLoaderInfo.bytesLoaded + " / " + _loader.contentLoaderInfo.bytesTotal );
 			if ( this.progressFunc == null ) {
 				dispatchEvent( $e );
 			}else {
@@ -155,8 +155,8 @@ package carlylee.net
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			var elapsedTime:int = getTimer() - _startTime;
-			trace( "SWFLoader loading image is succeed : " + _urlRequest.url );
-			trace( "Elapsed Time: " + elapsedTime + "ms. Try number: " + _tryNumber );	
+			trace( "[SWFLoader] " + _urlRequest.url + "is successfully loaded. " + elapsedTime + "ms were elapsed. " + _tryNumber + " times tried." );
+			trace( "bytesLoaded: " + _loader.contentLoaderInfo.bytesLoaded + " bytesTotal: " + _loader.contentLoaderInfo.bytesTotal );
 			this.swf = _loader.content;
 			this.domain = swf.loaderInfo.applicationDomain;
 			
@@ -175,7 +175,7 @@ package carlylee.net
 			try {
 				return domain.getDefinition( className );
 			} catch ( $e:Error) {
-				throw new IllegalOperationError( className + " definition not found in " + swf );
+				throw new IllegalOperationError( className + " definition is not found in " + swf );
 			}
 			return null;
 		}
@@ -185,7 +185,7 @@ package carlylee.net
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
-			trace( "SWFLoader IOError: " + _urlRequest.url +"/ tryNumber: " + _tryNumber );
+			trace( "[SWFLoader] IOError: " + _urlRequest.url );
 			if( _tryNumber < _maxTryNumber ){
 				this.reload();
 			}else{
@@ -202,9 +202,9 @@ package carlylee.net
 		private function reload():void{
 			_loader = new Loader;
 			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete );
-			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress );
-			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
-			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
 			setTimeout( load, RETRY_DELAY );
 		}
 		

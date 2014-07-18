@@ -4,7 +4,7 @@ package carlylee.util
 	/**
 	 * ExtraUtil
 	 *
-	 * author: Eunjeong, Lee.
+	 * author: Eunjeong, Lee.(carly.l86@gmail.com).
 	 * created: Dec 10, 2013
 	 */
 	

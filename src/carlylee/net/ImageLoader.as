@@ -9,7 +9,6 @@
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
-	import flash.system.SecurityDomain;
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
@@ -51,6 +50,7 @@
 		public var progressFunc:Function;
 		public var data:Object;
 		public var displayObject:DisplayObject;
+		public var bitmap:Bitmap;
 		public var loaderContext:LoaderContext;
 		
 		/**
@@ -81,9 +81,9 @@
 			
 			_loader = new Loader;
 			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete );
-			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress );
-			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
-			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
 		}
 		
 		/**
@@ -96,10 +96,8 @@
 				_urlRequest.url = _urlRequest.url + "?" + Math.random();
 			}
 			_tryNumber ++;
-			
 			if( loaderContext==null ){
 				loaderContext= new LoaderContext();
-				loaderContext.securityDomain = SecurityDomain.currentDomain;
 				loaderContext.checkPolicyFile = true;
 			}
 			_loader.load( this._urlRequest, loaderContext );
@@ -123,20 +121,20 @@
 		}
 				
 		private function onComplete( $e:Event ): void{
-			trace( "ImageLoader.onComplete: " + _loader );
 			if( _loader==null ) return;
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			var elapsedTime:int = getTimer() - _startTime;
-			trace( "ImageLoader loading image is succeed : " + _urlRequest.url );
-			trace( "Elapsed Time: " + elapsedTime + "ms. Try number: " + _tryNumber );	
+//			trace( "[ImageLoader] " + _urlRequest.url + "is successfully loaded. " + elapsedTime + "ms were elapsed. " + _tryNumber + " times tried." );	
 			try{
-				this.displayObject = $e.target.content;
-				if( smoothing ) Bitmap( displayObject ).smoothing = true;
+				this.bitmap = $e.target.content;
+				if( smoothing ) bitmap.smoothing = true;
 			}catch($e:Error){
-				this.displayObject = _loader;
+				trace( $e.name + " : " + $e.message );
+				trace( $e.getStackTrace() );
 			}
+			this.displayObject = _loader;
 			if( this.completeFunc == null ){
 				this.dispatchEvent( new ImageLoaderEvent( ImageLoaderEvent.LOAD_COMPLETE, displayObject, this.data ));	
 			}else{
@@ -150,7 +148,7 @@
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
-			trace( "ImageLoader IOError: " + _urlRequest.url +"/ tryNumber: " + _tryNumber );
+			trace( "[ImageLoader] IOError: " + _urlRequest.url );
 			if( _tryNumber < _maxTryNumber ){
 				this.reload();
 			}else{
@@ -165,9 +163,9 @@
 		
 		private function reload():void{
 			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete );
-			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress );
-			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
-			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
 			setTimeout( load, RETRY_DELAY );
 		}
 		

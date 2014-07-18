@@ -3,7 +3,7 @@ package carlylee.util
 	/**
 	 * XMLUtil
 	 *
-	 * author: Eunjeong, Lee.
+	 * author: Eunjeong, Lee.(carly.l86@gmail.com).
 	 * modified: Dec 10, 2013
 	 */
 	public class XMLUtil

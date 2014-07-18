@@ -3,28 +3,11 @@
 	/**
 	 * MathUtil
 	 *
-	 * author: Eunjeong, Lee.
+	 * author: Eunjeong, Lee.(carly.l86@gmail.com).
 	 * modified: Dec 10, 2013
 	 */
 	public class MathUtil
 	{
-		/**
-		 * x,y좌표 사이의 거리를 구한 값을 구한다.
-		 *  
-		 * @param $x:Number   first x-coordinate
-		 * @param $y:Number   first y-coordinate
-		 * @param $toX:Number second x-coordinate
-		 * @param $toY:Number second y-coordinate
-		 * @return:Number
-		 */			
-
-		public static function getDistance( $x1:Number, $x2:Number, $y1:Number, $y2:Number ):Number{
-			var diffX:Number = $x2 - $x1;
-			var diffY:Number = $y2 - $y1;
-			var d:Number = Math.sqrt( diffX*diffX + diffY*diffY );
-			return d;
-		};
-		
 		/**
 		 * x,y좌표 사이의 거리가 distance보다 작은지 검사하여 반환 
 		 * @param $x:Number   first x-coordinate

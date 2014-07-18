@@ -8,7 +8,7 @@ package carlylee.util
 	/**
 	 * MovieClipUtil
 	 *
-	 * author: Eunjeong, Lee.
+	 * author: Eunjeong, Lee.(carly.l86@gmail.com).
 	 * created: Dec 10, 2013
 	 */
 	
@@ -16,28 +16,29 @@ package carlylee.util
 	{
 		/**
 		 * @param $mc:MovieClip
-		 * @param $reset:Boolean 	if 'true', brings the playhead to the first frame of the movie clip and stops it there.
+		 * @param $reset:Boolean 	if 'true', brings the playhead to the first frame of the MovieClip and stops it there.
 		 */
 		public static function freezeMovieClip( $mc:MovieClip, $reset:Boolean=false ):void{
-			var i:int = 0;
-			var mc:MovieClip;
+			if( $mc==null ) return;
+			var i:int = $mc.numChildren;
 			if( $reset ) $mc.gotoAndStop( 1 );
-			for( i; i<$mc.numChildren; ++i ){
-				mc = $mc.getChildAt(i) as MovieClip;
-				if( mc != null ) freezeMovieClip( mc, $reset );
+			else $mc.stop();
+			while( --i>-1 ){
+				freezeMovieClip( $mc.getChildAt(i), $reset );
 			}
 		}
 		
 		/**
-		 * @param $mc::MovieClip
-		 */		
-		public static function unfreezeMovieClip( $mc:MovieClip ):void{
-			var i:int = 0;
-			var mc:MovieClip;
-			$mc.stop();
-			for( i; i<$mc.numChildren; ++i ){
-				mc = $mc.getChildAt(i) as MovieClip;
-				if( mc != null ) unfreezeMovieClip( mc );
+		 * @param $mc
+		 * @param $fromFirstFrame	if 'true', brings the playhead to the first frame of the MovieClip and play from there.
+		 */			
+		public static function unfreezeMovieClip( $mc:MovieClip, $fromFirstFrame:Boolean=false ):void{
+			if( $mc==null ) return;
+			var i:int = $mc.numChildren;
+			if( $fromFirstFrame ) $mc.gotoAndPlay( 1 );
+			else $mc.play();
+			while( --i>-1 ){
+				unfreezeMovieClip( $mc.getChildAt(i), $fromFirstFrame );
 			}
 		}
 		

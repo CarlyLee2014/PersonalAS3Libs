@@ -34,6 +34,27 @@
 		}
 		
 		/**
+		 * 
+		 * @param $string1
+		 * @param $string2
+		 * @param $caseSensitive(false)
+		 * @return 
+		 */		
+		public static function sortInAlphabeticalOrder( $string1:String, $string2:String, $caseSensitive:Boolean=false ):int{
+			if( !$caseSensitive ){
+				$string1 = $string1.toLowerCase();
+				$string2 = $string2.toLowerCase();
+			}
+			var i:int, j:int = 0;
+			var len:int = ($string1.length<$string2.length) ? $string1.length : $string2.length;
+			for( i; i<len; ++i ){
+				if( $string1.charCodeAt(i) < $string2.charCodeAt(i) ) return -1;
+				else if( $string1.charCodeAt(i) > $string2.charCodeAt(i) ) return 1; 
+			}
+			return 0;
+		}
+		
+		/**
 		 * Number -> Hexadecmial
 		 * @param value:int
 		 * @param length:int
