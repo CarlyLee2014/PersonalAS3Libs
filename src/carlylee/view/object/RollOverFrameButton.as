@@ -18,6 +18,7 @@ package carlylee.view.object
 		public var id:int;
 		public var isOn:Boolean = false;
 		public var soundEffect:Boolean = true;
+		public var data:Object;
 		
 		private var _clip:MovieClip;
 		private var _labelMode:Boolean = false;

@@ -9,28 +9,14 @@
 	 */
 	public class StringUtil
 	{
-		
 		/**
 		 * Get rid of space from $string and returns.
 		 * @param $value
 		 * @return:String  
 		 */		
 		public static function trim( $value:String ):String{
-			var i:int = 0;
-			for( i; i<$value.length; ++i ){
-				if( $value.charAt( i ) != " " ){
-					$value = $value.substring( i );
-					break;
-				}
-			}
-			i = $value.length-1;
-			for( i; i>0; --i ){
-				if( $value.charAt( i ) != " " ){
-					$value = $value.substring( 0, i+1 );
-					break;
-				}
-			}
-			return $value;
+			var reg:RegExp = /^\s+|\s+$/g;
+			return $value.replace( reg, "" );
 		}
 		
 		/**
@@ -45,9 +31,9 @@
 				$string1 = $string1.toLowerCase();
 				$string2 = $string2.toLowerCase();
 			}
-			var i:int, j:int = 0;
+			var i:int = -1;
 			var len:int = ($string1.length<$string2.length) ? $string1.length : $string2.length;
-			for( i; i<len; ++i ){
+			while( ++i<len ){
 				if( $string1.charCodeAt(i) < $string2.charCodeAt(i) ) return -1;
 				else if( $string1.charCodeAt(i) > $string2.charCodeAt(i) ) return 1; 
 			}
@@ -55,22 +41,21 @@
 		}
 		
 		/**
-		 * Number -> Hexadecmial
+		 * Number -> Hexadecimal
 		 * @param value:int
-		 * @param length:int
+		 * @param length:int(6)		
 		 * @param header:String
 		 * @return:String 
 		 * 
 		 */		
-		public static function numberToHex( $value:int, $length:int=6, $header:String="0x" ):String{
+		public static function numberToHex( $value:int, $length:int=6 ):String{
 			var str: String = $value.toString( 16 ).toUpperCase();
-			// 앞에 붙일 0의 개수 
 			var len: int = $length - str.length;
-			
-			for( var i: int=0; i<len; i++ ){
+			var i:int = -1;
+			while( ++i<len ){
 				str = "0" + str;
 			}
-			return $header + str;
+			return "0x" + str;
 		}
 		
 		/**

@@ -16,7 +16,6 @@ package carlylee.net
 	import flash.utils.setTimeout;
 	
 	import carlylee.event.SWFLoaderEvent;
-	import carlylee.util.ExtraUtil;
 	
 	/**
 	 * SWFLoader
@@ -132,8 +131,12 @@ package carlylee.net
 			_loader.load( this._urlRequest, loaderContext );
 		}
 		
+		/**
+		 * If you want to get 'bytesTotal', you need to disable 'GZIP' for swfs on your server.
+		 * Add this to your .htaccess file : SetEnvIfNoCase          Request_URI \.swf$ no-gzip dont-vary
+		 * @param $e
+		 */		
 		private function onProgress( $e:ProgressEvent ):void{
-			trace( "SWFLoader.onProgress : " + _loader.contentLoaderInfo.bytesLoaded + " / " + _loader.contentLoaderInfo.bytesTotal );
 			if ( this.progressFunc == null ) {
 				dispatchEvent( $e );
 			}else {
@@ -156,7 +159,6 @@ package carlylee.net
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			var elapsedTime:int = getTimer() - _startTime;
 			trace( "[SWFLoader] " + _urlRequest.url + "is successfully loaded. " + elapsedTime + "ms were elapsed. " + _tryNumber + " times tried." );
-			trace( "bytesLoaded: " + _loader.contentLoaderInfo.bytesLoaded + " bytesTotal: " + _loader.contentLoaderInfo.bytesTotal );
 			this.swf = _loader.content;
 			this.domain = swf.loaderInfo.applicationDomain;
 			

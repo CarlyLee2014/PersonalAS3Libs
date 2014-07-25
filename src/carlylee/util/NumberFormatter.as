@@ -18,9 +18,8 @@ package carlylee.util
 		public static function withCommas( $num:Number, $digit:int=0, $round:Boolean=true ):String{
 			var largeNumber:String = String( $num );
 			var front:Array = largeNumber.split(".");
-			var reg:RegExp=/\d{1,3}(?=(\d{3})+(?!\d))/;
-			while( reg.test(front[0]) )
-				front[0] = front[0].replace( reg,"$&," );
+			var reg:RegExp=/\d{1,3}(?=(\d{3})+(?!\d))/g;
+			front[0] = front[0].replace( reg,"$&," );
 			if( $digit > 0 ){
 				if( $round ){
 					var pow:int = Math.pow( 10, $digit );
