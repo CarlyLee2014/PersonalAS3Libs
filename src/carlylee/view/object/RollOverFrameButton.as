@@ -96,8 +96,8 @@ package carlylee.view.object
 		}
 		
 		private function onMouseUp( $e:MouseEvent ):void{
-			this.onOut();
 			this.dispatchEvent( new MouseEvent( MouseEvent.CLICK ));
+			this.onOut();
 		}
 	}
 }

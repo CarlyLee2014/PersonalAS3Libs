@@ -14,6 +14,7 @@ package carlylee.control
 	public class Refresher
 	{
 		private static var _dict:Dictionary = new Dictionary();//contains of Vector.<RefreshItem>
+		public static var strictMode:Boolean = true;
 		
 		public static function addRefreshItem( $refreshItem:RefreshItem ):void{
 			if( _dict[$refreshItem.group] == undefined ){
@@ -24,7 +25,9 @@ package carlylee.control
 		
 		public static function executeRefresh( $groupName:String, ...$params ):void{
 			if( _dict[$groupName] == undefined ){
-				throw new Error( "There is no group called [" + $groupName + "] in Refresher." );
+				var errorMessage:String = "There is no group called [" + $groupName + "] in Refresher.";
+				trace( errorMessage );
+				if( strictMode ) throw new Error( errorMessage );
 			}else{
 				var v:Vector.<RefreshItem> = _dict[$groupName];
 				var i:int = 0;
@@ -40,7 +43,9 @@ package carlylee.control
 		
 		public static function deleteRefreshGroup( $groupName:String ):void{
 			if( _dict[$groupName] == undefined ){
-				throw new Error( "There is no group called [" + $groupName + "] in Refresher." );
+				var errorMessage:String = "There is no group called [" + $groupName + "] in Refresher.";
+				trace( errorMessage );
+				if( strictMode ) throw new Error( errorMessage );
 			}else{
 				delete _dict[$groupName];
 			}
@@ -48,7 +53,9 @@ package carlylee.control
 		
 		public static function deleteRefreshItem( $refreshItem:RefreshItem ):void{
 			if( _dict[$refreshItem.group] == undefined ){
-				throw new Error( "There is no group called [" + $refreshItem.group + "] in Refresher." );
+				var errorMessage:String = "There is no group called [" + $refreshItem.group + "] in Refresher.";
+				trace( errorMessage );
+				if( strictMode ) throw new Error( errorMessage );
 			}else{
 				var v:Vector.<RefreshItem> = _dict[$refreshItem.group];
 				var i:int = 0;
@@ -69,7 +76,9 @@ package carlylee.control
 		
 		public static function deleteRefreshItemWithID( $groupName:String, $id:String ):void{
 			if( _dict[$groupName] == undefined ){
-				throw new Error( "There is no group called [" + $groupName + "] in Refresher." );
+				var errorMessage:String = "There is no group called [" + $groupName + "] in Refresher.";
+				trace( errorMessage );
+				if( strictMode ) throw new Error( errorMessage );
 			}else{
 				var v:Vector.<RefreshItem> = _dict[$groupName];
 				var i:int = 0;
