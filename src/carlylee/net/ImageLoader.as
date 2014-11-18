@@ -89,14 +89,14 @@
 		/**
 		 * @param $random:Boolean=false	 if it's true 'url?545465', it's not true 'url'.
 		 */		
-		public function load( $random:Boolean=false ):void{
+		public function load( $random:Boolean=false, $noContext:Boolean=false ):void{
 			if( _loader==null ) return;
 			_startTime = getTimer();
 			if( $random ){
 				_urlRequest.url = _urlRequest.url + "?" + Math.random();
 			}
 			_tryNumber ++;
-			if( loaderContext==null ){
+			if( !$noContext ){
 				loaderContext= new LoaderContext();
 				loaderContext.checkPolicyFile = true;
 			}
@@ -116,7 +116,7 @@
 			if( this.initFunc == null ){
 				this.dispatchEvent( $e.clone() );
 			}else{
-				this.initFunc( $e );
+				this.initFunc( $e ); 
 			}
 		}
 				
@@ -148,12 +148,12 @@
 			_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onComplete );
 			_loader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onProgress );
 			_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
-			trace( "[ImageLoader] IOError: " + _urlRequest.url );
+//			trace( "[ImageLoader] IOError: " + _urlRequest.url );
 			if( _tryNumber < _maxTryNumber ){
 				this.reload();
 			}else{
 				if( this.errorFunc == null ){
-					this.dispatchEvent( $e.clone() );
+					this.dispatchEvent( $e );
 				}else{
 					this.error = $e.toString();
 					this.errorFunc( this.error );
@@ -174,6 +174,7 @@
 			displayObject = null;
 			_loader.unloadAndStop( $gc );
 			_loader = null;
+			loaderContext = null;
 		}
 	}
 }

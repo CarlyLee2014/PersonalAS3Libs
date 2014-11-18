@@ -1,5 +1,6 @@
 package carlylee.util
 {
+	import flash.utils.ByteArray;
 	
 	/**
 	 * ExtraUtil
@@ -29,6 +30,13 @@ package carlylee.util
 			for( str in $obj ){
 				trace( "[ "+str+" ]: " + $obj[str] );
 			}
+		}
+		
+		public static function deepCopyObject( $obj:Object ):Object{
+			var bytes:ByteArray = new ByteArray();
+			bytes.writeObject( $obj );
+			bytes.position = 0;
+			return bytes.readObject();
 		}
 	}
 }

@@ -22,6 +22,7 @@ package carlylee.view.object
 		
 		private var _clip:MovieClip;
 		private var _labelMode:Boolean = false;
+		private var _onFrame:String = "2";
 		
 		public function RollOverFrameButton( $clip:MovieClip, $id:int=0, $isLabelMode:Boolean=false, $addChild:Boolean=false )
 		{
@@ -56,8 +57,9 @@ package carlylee.view.object
 			_clip.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
 		}
 		
-		public function setOn():void{
+		public function setOn( $frame:String="2" ):void{
 			this.isOn = true;
+			_onFrame = $frame;
 			this.onOver();
 		}
 		
@@ -70,9 +72,9 @@ package carlylee.view.object
 			if( _labelMode ){
 				_clip.gotoAndStop( "over" );
 			}else{
-				_clip.gotoAndStop( 2 );
+				_clip.gotoAndStop( _onFrame );
 			}
-			if( soundEffect && $e!=null ) SoundManager.play( SOUND.MOUSE_OVER );
+			if( soundEffect && $e!=null ) SoundManager.getInstance().play( SOUND.MOUSE_OVER );
 			if( $e!=null ) this.dispatchEvent( $e );
 		}
 		
@@ -97,6 +99,7 @@ package carlylee.view.object
 		
 		private function onMouseUp( $e:MouseEvent ):void{
 			this.dispatchEvent( new MouseEvent( MouseEvent.CLICK ));
+			_clip.gotoAndStop( _onFrame );
 			this.onOut();
 		}
 	}

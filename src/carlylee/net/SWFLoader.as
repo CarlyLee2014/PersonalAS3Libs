@@ -69,7 +69,7 @@ package carlylee.net
 		public var progressFunc:Function;
 		public var data:Object;
 		public var swf:DisplayObject;
-		public var domain:ApplicationDomain;
+		public var applicationDomain:ApplicationDomain;
 		public var loaderContext:LoaderContext;
 		
 		/**
@@ -160,7 +160,7 @@ package carlylee.net
 			var elapsedTime:int = getTimer() - _startTime;
 			trace( "[SWFLoader] " + _urlRequest.url + "is successfully loaded. " + elapsedTime + "ms were elapsed. " + _tryNumber + " times tried." );
 			this.swf = _loader.content;
-			this.domain = swf.loaderInfo.applicationDomain;
+			this.applicationDomain = swf.loaderInfo.applicationDomain;
 			
 			if( this.completeFunc == null ){
 				this.dispatchEvent( new SWFLoaderEvent( SWFLoaderEvent.LOAD_COMPLETE, this ));	
@@ -175,7 +175,7 @@ package carlylee.net
 		 */		
 		public function getClass( className:String ):*{
 			try {
-				return domain.getDefinition( className );
+				return applicationDomain.getDefinition( className );
 			} catch ( $e:Error) {
 				throw new IllegalOperationError( className + " definition is not found in " + swf );
 			}

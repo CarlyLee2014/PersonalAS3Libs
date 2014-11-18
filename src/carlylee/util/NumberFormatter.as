@@ -4,7 +4,8 @@ package carlylee.util
 	 * NumberFormatter
 	 * 
 	 * author: Eunjeong, Lee(carly.l86@gmail.com).
-	 * created: July 10, 2014
+	 * created: July 10, 2014.
+	 * recent updated: October 29, 2014.
 	 */
 	public class NumberFormatter
 	{
@@ -26,6 +27,7 @@ package carlylee.util
 					var str:String = String( Math.round($num*pow)/pow );
 					front[1] = str.split( "." )[1];
 				}else{
+					if( front[1] == undefined ) front[1] = "0";
 					front[1] = front[1].substr( 0, $digit );
 				}
 				if( front[1] == undefined ) front[1] = "0";
@@ -44,15 +46,20 @@ package carlylee.util
 		 * @param $capital(false)	
 		 * @param $digit(default=2)		1.82k
 		 * @param $round(true)			1.76k -> 1.8k
-		 * @param $iteration			This is used inside method, don't set the value.
+		 * @param $start(default=1000)  				
+		 * @param $iteration			
 		 * @return 
 		 */		
-		public static function withChar( $num:Number, $capital:Boolean=false, 
-														 $digit:int=2, $round:Boolean=true, $iteration:int=0 ):String{
-			if( $num < 1000 ) return String( $num );
+		public static function withChar( $num:Number, $capital:Boolean=false, $digit:int=2, $round:Boolean=true, $start:int=1000, $iteration:int=0 ):String{
+			if( $num < $start ) return withCommas( $num, 0, $round );
 			var char:String = "kmbt";
 			if( $capital ) char = "KMBT";
-			$num = $num/1000;
+			var i:int = 0;
+			var n:int = 1000;
+			for( i; i<$iteration; i++ ){
+				n = n*1000;
+			}
+			$num = $num/n;
 			while( $num>=1000 && $iteration<char.length ){
 				$num = $num/1000;
 				$iteration ++;
@@ -60,7 +67,7 @@ package carlylee.util
 			var pow:int = Math.pow( 10, $digit );
 			if( $round ) $num = Math.round( $num*pow )/pow;
 			else $num = int( $num*pow )/pow;
-			return $num + char.charAt( $iteration );
+			return withCommas( $num, $digit, false ) + char.charAt( $iteration );
 		}
 		
 		public static function addOrdinal( $order:int ):String{
@@ -77,6 +84,66 @@ package carlylee.util
 				}
 			}
 			return "th";
+		}
+		
+		/**
+		 * @param $seconds:int 				31536000
+		 * @param $isMillisecond:Boolean	Is '$seconds' millisecond? 
+		 * @return:Number 					1. Returns only year.
+		 */	
+		public static function timeFormatYear( $seconds:Number, $isMillisecond:Boolean=false ):Number {
+			if( $isMillisecond ) return Math.floor( $seconds/31536000000 );
+			else return Math.floor( $seconds/31536000 );  
+		}
+		
+		/**
+		 * @param $seconds:int 				18144000
+		 * @param $isMillisecond:Boolean	Is '$seconds' millisecond? 
+		 * @return:Number 					1. Returns only month.
+		 */	
+		public static function timeFormatMonth( $seconds:Number, $isMillisecond:Boolean=false ):Number {
+			if( $isMillisecond ) return Math.floor( $seconds/18144000000 );
+			else return Math.floor( $seconds/18144000 ); 
+		}
+		
+		/**
+		 * @param $seconds:int 				604800
+		 * @param $isMillisecond:Boolean	Is '$seconds' millisecond? 
+		 * @return:Number 					1. Returns only week.
+		 */	
+		public static function timeFormatWeek( $seconds:Number, $isMillisecond:Boolean=false ):Number {
+			if( $isMillisecond )  return Math.floor( $seconds/604800000 );
+			else return Math.floor( $seconds/604800 );
+		}
+		
+		/**
+		 * @param $seconds:int 				86400
+		 * @param $isMillisecond:Boolean	Is '$seconds' millisecond? 
+		 * @return:Number 					1. Returns only day.
+		 */	
+		public static function timeFormatDay( $seconds:Number, $isMillisecond:Boolean=false ):Number {
+			if( $isMillisecond )  return Math.floor( $seconds/86400000 );
+			else return Math.floor( $seconds/86400 );
+		}
+		
+		/**
+		 * @param $seconds:int 				3600
+		 * @param $isMillisecond:Boolean	Is '$seconds' millisecond? 
+		 * @return:Number 					1. Returns only hour.
+		 */		
+		public static function timeFormatHour( $seconds:Number, $isMillisecond:Boolean=false ):Number{
+			if( $isMillisecond ) return Math.floor( int(( $seconds/3600000 )+1));
+			else return Math.floor( int(( $seconds/3600 )+1));
+		}
+		
+		/**
+		 * @param $seconds:int 				9900
+		 * @param $isMillisecond:Boolean 	Is '$seconds' millisecond? 
+		 * @return:Number					165 only returns minutes.
+		 */		 
+		public static function timeFormatMin( $seconds:int, $isMillisecond:Boolean=false ):Number{
+			if( $isMillisecond ) return Math.floor( $seconds/60000 );
+			else return Math.floor( $seconds/60 ); 
 		}
 	}
 }

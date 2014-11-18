@@ -163,22 +163,6 @@
 		}
 		
 		/**
-		 * @param $seconds:int 	3600
-		 * @return:String 		1. Returns only hour.
-		 */		
-		public static function timeFormatHour( $seconds:int ):String{
-			return String( int(( $seconds/3600 )+1));
-		}
-		
-		/**
-		 * @param $ms:int 	millisecond. 3600000
-		 * @return:String 	1. Returns only hour.
-		 */		
-		public static function timeFormatHourUsingMS( $ms:int ):String{
-			return String( int(( $ms/3600000 )+1));
-		}
-		
-		/**
 		 * @param $seconds:int 	9925
 		 * @return:String 		02:45:25
 		 */		
@@ -220,30 +204,6 @@
 			var min:int = ($ms/60000)%60;
 			var sec:int = ($ms/1000)%60;
 			return addZeros( min )+":"+addZeros( sec );
-		}
-		
-		/**
-		 * @param $seconds:int 				9900
-		 * @param $isMillisecond:Boolean 	Is '$seconds' millisecond? 
-		 * @return:String					165 only returns minutes.
-		 */		
-		public static function timeFormatMin( $seconds:int, $isMillisecond:Boolean=false ):String{
-			if( $isMillisecond ){
-				return String( $seconds/60000 );
-			}else{
-				return String( $seconds/60 );
-			}
-		}
-		
-		public static function timeFormatPast( $seconds:int ):String {
-			$seconds = -$seconds;
-			if( $seconds<60 ) 		return $seconds+"second";
-			if( $seconds<3600 ) 	return int( $seconds/60 )+"minutes";
-			if( $seconds<86400 ) 	return int( $seconds/3600 )+"hours";
-			if( $seconds<604800 ) 	return int( $seconds/86400 )+"day";
-			if( $seconds<18144000 ) return int( $seconds/604800 )+"weeks";
-			if( $seconds<31536000 ) return int( $seconds/18144000 )+"month";
-			return int($seconds/31536000)+"years";
 		}
 		
 		public static function parsingText( $text:String="", $valObject:Object=null ):String{
